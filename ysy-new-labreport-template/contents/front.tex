@@ -1,85 +1,66 @@
 % !TEX root = ../main.tex
 
-% 封面
-
-
-%---------------------------------------------------------------------
-% 评分栏
-\begin{table}
-	\renewcommand\arraystretch{1.7}
-	\begin{tabularx}{\textwidth}{
-			|X|X|X|X
-			|X|X|X|X|}
-		\hline
-		\multicolumn{2}{|c|}{Preview Report}&\multicolumn{2}{|c|}{Experimental Record}&\multicolumn{2}{|c|}{Analysis \& Discussion}&\multicolumn{2}{|c|}{\Large\textbf{Total}}\\
-		\hline
-		\LARGE & & \LARGE & & \LARGE & & \LARGE & \\
-		\hline
-	\end{tabularx}
-\end{table}
+% 前言
+\clearpage
+\thispagestyle{empty}
 
 
 %---------------------------------------------------------------------
 % 信息栏
-\begin{table}
-	\renewcommand\arraystretch{1.7}
-	\begin{tabularx}{\textwidth}{|X|X|X|X|}
-		\hline
-		Major \& Grade： & Physics, 2022 &Group number： & Group 2\\
-		\hline
-		Student name： & \textbf{杨舒云}  & Student number： & \textbf{22344020}\\
-		\hline
-		Experiment time： & 2024/11/1 & Teacher's Signature： & \\
-		\hline
-	\end{tabularx}
-\end{table}
-
-
-%---------------------------------------------------------------------
-% 大标题
-\begin{center}
-	\huge \textbf{APL1-4 \quad 电子自旋共振实验\\Electron Spin Resonance Experiment (ESR)}
-\end{center}
+% 格式：实验标题、时间、地点、环境、实验人、补充实验人（特定格式如下）和指导老师
+% \textcolor{fgraygreen}{\textbf{实验人2：}} &  \textbf{姓名 学号} \\
+\infoTable{电阻热噪声玻尔兹曼常量测量}
+{2024年10月25日，周五，下午14:30-18:00}
+{教学楼物理实验室A101}
+{室温26\degree}
+{杨舒云 22344020}
+{\textcolor{fgraygreen}{\textbf{实验人2：}} &  \textbf{戴鹏辉 22344016} \\}
+{何振辉，柳奎}
 
 
 %---------------------------------------------------------------------
 % 注意事项
-\textbf{【Precautions】}
-\begin{enumerate}
-	\item The lab report consists of three parts:
-	\begin{enumerate}
-		\item \textbf{Prview Report}: Carefully study the experimental manual before class to understand the experimental principles; familiarize yourself with the instruments, equipment, and tools needed for the experiment, and their usage; complete the pre-lab thought questions; understand the physical quantities to be measured during the experiment, and prepare the experimental record forms in advance as required (you may refer to the experiment report template and print it if needed).
-		\item \textbf{Experimental Records}: Meticulously and objectively record the experimental conditions, phenomena observed during the experiment, and data collected. Experimental records should be written in ballpoint pen or fountain pen and signed (\textcolor{fred}{\textbf{Records written in pencil are considered invalid}}). \textcolor{fred}{\textbf{Keep original records, including any errors and deletions; if a correction is necessary due to an error, it must be made according to the standard procedure.}} (Records should not be entered into a computer and printed, but handwritten notes can be scanned and printed); before leaving, have the experimental teacher check and sign the records. 
-		\item \textbf{Data Processing and Analysis}: Process the raw experimental data (except for experiments that focus on learning the use of instruments), analyze the reliability and reasonableness of the data; present the data and results in a standardized manner (charts and tables), including numbering and referencing the data, charts, and tables sequentially; analyze the physical phenomena (including answering the experimental thought questions, writing out the thought process, and citing data as needed according to standards); finally, draw a conclusion.
-	\end{enumerate}
-	\textbf{The experiment report combines the preparation report, experimental records, and data processing and analysis, along with this cover page.}
-	\item Submit the \textbf{experiment report} within one week after completing each experiment (under special circumstances, no later than two weeks).
-\end{enumerate}
+\noindent\textcolor{fgraygreen}{\textbf{注意事项}}
 
+实验报告由\textbf{预习}、\textbf{实验}和\textbf{分析与讨论}三部分组成，并附封面页与附件。预习报告要求课前深入研读实验手册，掌握实验原理，熟悉仪器设备及其使用方法，完成实验思考题，并提前准备实验记录表（可参考实验报告模板打印）。实验记录需客观、详细地记录实验条件、现象及数据，须使用圆珠笔或钢笔书写并签名（\textbf{铅笔记录无效}）。\textbf{原始记录必须完整保留，包括错误和修改内容，错误更正需按标准程序进行}。实验记录不得录入计算机打印，但可扫描手写笔记后打印，实验结束前须经指导教师检查并签字。数据处理与分析环节需对原始数据进行处理（除以仪器学习为主的实验外），评估数据的可靠性和合理性，并以标准格式呈现（图表需编号并规范引用）。此外，还需分析实验现象，回答实验思考题，规范引用数据，并最终得出实验结论。实验报告需在实验结束后一周内提交（特殊情况不超过两周）。
 
-%---------------------------------------------------------------------
-% 实验安全	
-\textbf{【Safety】}	
-\begin{enumerate}
-	\item The pole gap has been adjusted before the instrument leaves the factory. It is best not to adjust it by yourself during the experiment to avoid deviating from the resonant magnetic field too much.
-	\item After ensuring that the wiring is correct, turn on the power and adjust the excitation voltage slowly.
-	\item The double T adapter and short-circuit piston should not be adjusted with force outside the thread range to avoid thread slippage.
-	\item  Protect the Gauss meter probe to avoid bending and squeezing.
-	\item  Handle the sample with care when using it, and remember to put it back in the sample box after use to avoid loss and damage.
-	\item  After the experiment, adjust the excitation voltage and sweep voltage to zero, then turn off the power and restore all instruments to their original state.
-\end{enumerate}	
-	
 	
 %---------------------------------------------------------------------	
-% 特别鸣谢
-\textbf{【Special Note】}	
-\begin{itemize}
-	\item Special thanks to \textbf{Huanyu Shi}, a senior from the Class of 2019, for providing the \LaTeX \ orginal template for this experiment report, which was adjusted by \textbf{Shuyun Yang}. 
+\noindent\textcolor{fgraygreen}{\rule{\textwidth}{1.5pt} }
+
+% 特别说明
+\noindent\textcolor{fgraygreen}{\textbf{特别说明}}
+
+\textbf{\textcolor{fred}{本实验报告模板基于 MIT License 许可协议进行分发和使用，使用本模板即表示您同意遵守相关条款。}}
+本模板由GitHub用户\textbf{pifuyuini} 开发，最初架构基于\href{https://huanyushi.github.io/posts/labreport-template/}{一位2019级学长制作的实验报告模板}，设计美化部分参考了\href{https://www.yykspace.com/cn/index.html}{某位物院大佬}的实验报告模版。在此感谢二人给予的支持（虽然他们本人可能并不知道）。
+此外，随着我们进入高年级阶段的近代物理实验课程，对于实验报告的书写也有了更高的要求——不再局限于套用固定格式的模板，而是更倾向于参考学术论文的结构与风格来完成实验报告，这也是本模板设计的初衷。因此，与基础物理实验课程中学院提供的“标准模板”相比，本报告在架构和行文风格上均有所调整。\textbf{如有与老师或助教的阅读习惯存在不符之处，敬请谅解。}
+
+%---------------------------------------------------------------------
+\noindent\textcolor{fgraygreen}{\rule{\textwidth}{1.5pt} }
+
+% 评分栏
+\noindent\textcolor{fgraygreen}{\textbf{实验得分}}
+
+\begin{table}[h!]
+	\renewcommand{\arraystretch}{1.2} % 行距
+	\begin{tabular}{|m{8cm}|m{7cm}|}
+		\hline
+		评分项目 & 得分 \\
+		\hline
+		预习（Preparation） & \\
+		\hline
+		实验（Experiment） & \\
+		\hline
+		报告（Report） & \\
+		\hline
+		总分（Total Score） & \\
+		\hline
+		教师签名（Signature） & \\
+		\hline
+	\end{tabular}
+\end{table}
 	
-	\item \textbf{Due to the absence of an experiment number in the original template, a self-named number has been added for ease of organization on the computer.} 
-	
-	\item Additionally, \textcolor{fred}{\large\textbf{this experiment report is being improved towards full English expression, so there may be instances of mixed Chinese and English during this transition period. We appreciate your understanding!}}
-\end{itemize}
+
 	
 
 %---------------------------------------------------------------------	

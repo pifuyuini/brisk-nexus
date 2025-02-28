@@ -29,26 +29,25 @@
 % ---------------------------------------------------------------------
 % 引入必要的包
 %A
-\usepackage{amsmath,enumerate,multirow,float} % 数学公式，
-\usepackage{tabularx}
-\usepackage{tabu}
-\usepackage{subfig}
-\usepackage{fancyhdr}
+\usepackage{amsmath,enumerate,multirow,float} % 1.提供增强的数学公式排版功能，如 align、gather 等环境。2.增强 enumerate 环境，允许指定编号格式。3.在表格中合并多行单元格。4.用于控制浮动体（如表格、图片）的放置，提供 H 选项让浮动体固定在当前位置。
+\usepackage{tabularx} % 创建自动调整列宽的表格，比 tabular 更灵活。
+\usepackage{subfig} % 创建多个子图。
+\usepackage{fancyhdr} % 自定义页眉和页脚。
 \usepackage{graphicx} % 插图
-\usepackage{wrapfig}  
-\usepackage{physics}
-\usepackage{appendix}
-\usepackage{amsfonts}
+\usepackage{wrapfig} % 让图片环绕文本。
+\usepackage{physics} % 提供数学物理相关命令，如 \bra{}、\ket{}。
+\usepackage{appendix} % 创建附录部分，允许 \appendix 轻松管理附录编号。
+\usepackage{amsfonts} % 提供 \mathbb{}、\mathcal{} 等数学字体。
 %B
-\usepackage{mathrsfs} % 字体
-\usepackage{calligra}
-\usepackage{lipsum}
+\usepackage{mathrsfs} % 提供花体数学字体，如 \mathscr{}。
+\usepackage{calligra} % 提供书法风格字体，可用于 \textcalligra{}。
+\usepackage{lipsum} % 生成占位文本 \lipsum[1-3]。
 \usepackage{adjustbox}% 调整表格大小
 \usepackage{tabularray} % 绘制表格时可以更加方便添加框线
 %C
-\usepackage{caption}
-\usepackage{authblk}
-\usepackage{braket}
+\usepackage{caption} % 自定义图片/表格标题格式。
+\usepackage{authblk} % 管理多作者信息。
+\usepackage{braket} % 提供 \braket{a|b} 量子力学符号。
 \usepackage{amssymb} % 包含更多数学符号
 \usepackage[en-US]{datetime2} % 设置日期为美式英语格式
 \usepackage{geometry}  % 页面调整

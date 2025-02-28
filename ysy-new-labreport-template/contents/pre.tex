@@ -1,90 +1,66 @@
 % !TEX root = ../main.tex
 
 % 预习报告	
+\clearpage
 \setcounter{section}{0}
-\section{APL1-4 电子自旋共振实验 \\ Preview Report}
+\section{预习报告}
+\vspace{-0.7cm} % 负值缩小间距
+\noindent\textcolor{fgraygreen}{\rule{0.382\textwidth}{2pt} }
+\vspace{7pt}
+% 可用\ysySection{预习报告}一键实现
 
+\subsection{实验概述}
 
-%---------------------------------------------------------------------
-% 实验目的
-\subsection{Purpose}
-\begin{enumerate}
-	\item 
-\end{enumerate}
+通过测量电阻热噪声精密测量玻尔兹曼常量。
 
+\subsection{实验原理}
 
-%---------------------------------------------------------------------
-% 仪器用具
-\subsection{Instruments \& Equipment}
-\begin{table}[htbp]
+实验利用锁相放大器测量噪声。时域上做等时间间隔采样，多次测量计算信号的\textbf{方均根值}。这句话的意思是：设备在等间隔的时间点上读取一个信号 $v(t_i) = s(t_i) + n(t_i)$，$s(t_i)$ 为 $t_i$ 时刻频率为 $f$ 的信号，$n(t_i)$ 为 $t_i$ 时刻的噪声，经与信号同频率 $f$ 的参考信号相敏检波后，输出 X 分量$X_f(t_i) = s_x(t_i) + n_f(t_i)$，是包含“同频”噪声的信号。定义噪声强度 X 分量测量值（这个式子显然是信号的方均根的表达式，同时它表达了噪声电压有效值）：
+\[
+v_{Nx}(f) = \sqrt{\frac{\sum_{i=1}^{M} \left(X_f(t_i) - \bar{X_f}\right)^2}{M}}
+\]
+其中，$\bar{X}_j = \frac{1}{M} \sum_{j=1}^{M} X_j$为输入信号的平均值，$M$ 为用于计算输入噪声值的样本数。
+
+\begin{table}[h!]
 	\centering
-	\renewcommand\arraystretch{1.6}
-	% \setlength{\tabcolsep}{10mm}
-	\begin{tabular}{|p{0.08\textwidth}|p{0.16\textwidth}|p{0.08\textwidth}|p{0.6\textwidth}|}
+	\caption{单分量等效噪声带宽（ENBW）与陡降和时间常数$\tau$的对应关系}
+	\label{tab:ENBW}
+	\begin{tabular}{cccc}
 		\hline
-		Number & Name & Quantity & Main parameters (model, measurement range, measurement accuracy, etc.) \\
+		\textbf{阶数(n)} & \textbf{Slope (dB/oct)} & \textbf{ENBW (1/$\tau$)} & \textbf{X 测量等待时间$t_X$}\\
 		\hline
-		1 & 上海宜准公司VQP01真空平台 & 1 & 针对帕邢实验、四极质谱实验等实验项目而设计的一台综合实验装置，该装置由真空放电腔体、机械泵、分子泵、高压电源、四极质谱仪、真空计以及击穿电压测量系统等装置构成。 \\
+		1 & 6 & 1/4 & 4.6 \\
+		2 & 12 & 1/8 & 6.6 \\
+		3 & 18 & 3/32 & 8.4 \\
+		4 & 24 & 5/64 & 10 \\
 		\hline
 	\end{tabular}
 \end{table}
 
+实际测量有各种各样的噪声，考虑按以下方式合成：
+\[
+v_{Nx}(f) = \sqrt{\frac{\sum_{i=1}^{M} \left( n_{f_x}(t_i) \right)^2}{M}} = \sqrt{\frac{\sum_{i=1}^{M} \left( \sum_{k=1}^{m} n_{f_xk}(t_i) \right)^2}{M}} 
+\]
 
-%---------------------------------------------------------------------
-% 原理概述
-\subsection{Principle}
-\begin{enumerate}
-	\item 
-\end{enumerate}
+分离不同种类的噪声是困难的，除非在输入端做物理隔离。所以我们考虑的是非相干的噪声，按以下方式做合成：
+\[
+v_{Nx}(f) = \sqrt{\frac{\sum_{k=1}^{m} \sum_{i=1}^{M} \left( n_{f_xk}(t_i) \right)^2}{M}}
+\]
+上式给出了不同类型非相干噪声的叠加原理。
 
+对随机噪声，X 与 Y 独立等价，即输入噪声功率为 X 或 Y 测量功率的 2 倍：
+\[
+v_N^2 = \frac{1}{M} \sum_{j=1}^{M} \left( n_{xT}^2(j) + n_{yT}^2(j) \right) = \frac{2}{M} \sum_{j=1}^{M} n_{xT}^2(j)
+\]
 
-%---------------------------------------------------------------------
-% 实验前思考题
-\subsection{Thinking Before Experiment}
-
-% 思考题1
+\subsection{前思考题}
 \begin{question}
-	这是第一个思考题
+	如何与同班组的同学分配频率点？
 \end{question}
+在分配频率点时，合理的分配能够确保实验的顺利进行，同时避免重复测量和资源浪费。首先，我们需要确定测量的频率范围和步进，通常根据实验要求和设备限制确定。如果讲义中没有明确规定频率范围，通常可以根据设备性能自行选择适合的范围，例如1 Hz到100 kHz。之后根据班组人数，合理分配频率点。假设一个实验组有4名同学，可以采用线性划分或对数划分的方式分配频率点。
 
-% 思考题2
-\begin{question}
-	这是第二个思考题
-\end{question}
+在线性划分的方案中，频率点均匀分布在每个人负责的范围内。例如，在1 Hz到100 kHz的频率范围内测量20个频率点，每个同学负责其中的5个频率点。具体分配可以是：同学A测量1 Hz、10 Hz、100 Hz、1 kHz、10 kHz，同学B测量2 Hz、20 Hz、200 Hz、2 kHz、20 kHz，依此类推。这种分配方式简单易行，并确保每位同学都有从低频到高频的覆盖。
 
-% 思考题3
-\begin{question}
-	这是第三个思考题
-\end{question}
+另一种方式是对数划分，适合频率跨度较大的实验。对于频率范围从1 Hz到100 kHz的情况，可以选择在对数坐标上均匀分配频率点。例如，16个频率点可以按对数划分，每个同学负责如1 Hz、10 Hz、100 Hz、1 kHz等倍数变化的频率点，这样的划分方式能够更好地覆盖高频段的变化。同时，低频点也会保持合理的间隔。
 
-\highlight{这一行用来展示高亮。}
-
-\begin{ubox}{和老婆约会的小曲}
-	（以下也用于展示更改后的无序列表）
-	\begin{itemize}
-		\item 使一颗心免于哀伤；
-		\item 若我不曾见过太阳。
-	\end{itemize}
-\end{ubox}
-
-\highlight[fred]{接下来用于展示代码：}
-\begin{lstlisting}[style=pythonstyle,caption=代码记录示例]
-	# 示例代码
-	import matplotlib.pyplot as plt
-	import numpy as np
-	
-	# Data for plotting
-	t = np.arange(0.0, 2.0, 0.01)
-	s = 1 + np.sin(2 * np.pi * t)
-	
-	fig, ax = plt.subplots()
-	ax.plot(t, s)
-	
-	ax.set(xlabel='time (s)', ylabel='voltage (mV)',
-	title='About as simple as it gets, folks')
-	ax.grid()
-	
-	fig.savefig("test.png")
-	plt.show()
-\end{lstlisting}
-
+无论采用何种方案，都建议不同同学在某些频率点上进行交叉验证，以确保数据的一致性和准确性。例如，同学A和同学B可以在10 Hz和1 kHz进行重复测量，同学C和D则在50 Hz和5 kHz交叉测量。这样可以及时发现可能存在的误差，提高实验数据的可靠性。
