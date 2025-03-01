@@ -4,9 +4,9 @@ ysy_plot_utils.py
 Copyright (c) 2025 pifuyuini
 
 Author: pifuyuini
-Email: <my_email>
-Version: 1.1.0
-Date: 2025-01-04
+Email: You can contact me via Github
+Version: 1.2.0
+Date: 2025-03-01
 
 Description:
     This module provides a set of utility functions and settings for creating high-quality, customizable plots 
@@ -38,16 +38,22 @@ Usage:
     >>> y = [0, 1, 4, 9]
     >>> plot(x, y, legend_name='Sample Data', plot_title='Test Plot', x_label='Time', y_label='Value')
     >>> plt.show()
+
+Update:
+    1.2.0 Import LinearSegmentedColormap;  
+    1.2.0 Added function `liuyin_color_theme`;  
+    1.2.0 Added ability to plot data points.
+
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 
 
 # Import necessary package
 import matplotlib.pyplot as plt
 from cycler import cycler
-
+from matplotlib.colors import LinearSegmentedColormap
 
 
 # Settings
@@ -341,11 +347,72 @@ def firefly(requirement=None):
             'fsilver': '#e6e4e0', 
         }
         return color_dictionary[requirement]
+    
+
+# color-liuyin2
+def liuyin_color_theme(cmap_or_cycle=None, dark_or_light='dark', color_sample_num=10, set_color_cycle=True):
+    """
+    Generates and applies a custom color theme inspired by the 'Firefly Gallery' project.
+
+    This function provides an option to create either a color map or a color cycle based on the 'Firefly' theme.
+    The theme is designed to work in both dark and light modes, allowing users to select the appropriate theme 
+    based on their preference. The function also supports automatically updating Matplotlib's color cycle.
+
+    Args:
+        cmap_or_cycle (str, optional): Determines the output of the function.
+            - `'cycle'`: Returns a list of sampled colors for use as a color cycle.
+            - `'cmap'`: Returns the generated color map.
+            - `None`: No output, just updates the Matplotlib color cycle if `set_color_cycle` is True.
+        dark_or_light (str, optional): Specifies the color theme to use.
+            - `'dark'` (default): Uses the dark theme with colors `#FF8B4D` and `#5AFFCC`.
+            - `'light'`: Uses the light theme with colors `#FF7C3A` and `#1AFFB2`.
+        color_sample_num (int, optional): The number of colors to sample from the colormap. Default is 10.
+        set_color_cycle (bool, optional): If `True`, the function updates Matplotlib's color cycle with the generated colors. Default is `True`.
+
+    Returns:
+        list or LinearSegmentedColormap or None: 
+            - A list of colors if `cmap_or_cycle` is `'cycle'`.
+            - A `LinearSegmentedColormap` if `cmap_or_cycle` is `'cmap'`.
+            - `None` if no output is requested but the color cycle is updated in Matplotlib.
+
+    Example:
+        >>> from your_module import liuyin_color_theme
+        >>> liuyin_color_theme('cycle')  # Get color cycle
+        >>> liuyin_color_theme('cmap')   # Get color map
+        >>> liuyin_color_theme(set_color_cycle=True)  # Automatically apply color cycle to Matplotlib
+
+    Notes:
+        - To apply the generated color cycle to Matplotlib, ensure that this function is called after `ysy_settings`.
+        - The colors are sampled from a linear gradient colormap created using two sets of colors, one for dark and one for light themes.
+
+    """
+    # 定义深色和浅色主题的颜色
+    dark_colors = ["#FF8B4D", "#5AFFCC"]  # 深色主题
+    light_colors = ["#FF7C3A", "#1AFFB2"]  # 浅色主题
+    # 根据选择的主题设置主题颜色
+    theme_colors = dark_colors
+    if dark_or_light == 'light':  # 如果用户选择了浅色主题
+        theme_colors = light_colors
+    # 创建自定义的线性渐变 colormap，基于主题颜色
+    liuyin_cmap = LinearSegmentedColormap.from_list("liuyin_theme", theme_colors)
+    # 从渐变 colormap 中采样一定数量的颜色作为颜色循环
+    liuyin_cycle = [liuyin_cmap(i / (color_sample_num - 1)) for i in range(color_sample_num)]
+    # 设置颜色循环配置
+    add_color = {'axes.prop_cycle': cycler('color', liuyin_cycle)}
+    # 如果需要设置颜色循环，更新 Matplotlib 的 rcParams
+    if set_color_cycle:
+        plt.rcParams.update(add_color)
+    # 根据 cmap_or_cycle 参数返回不同的结果
+    if cmap_or_cycle == 'cycle':
+        return liuyin_cycle  # 返回颜色循环
+    elif cmap_or_cycle == 'cmap':
+        return liuyin_cmap  # 返回 colormap
+    return None  # 如果没有特定要求，返回 None
 
 
 
 # Standardized Plot
-def plot(x, y, legend_name, plot_title='', x_label='X', y_label='Y', plot_type='curve', legend_title=''):
+def plot(x, y, legend_name, plot_title='', x_label='X', y_label='Y', plot_type='curve', legend_title='', data_point=None):
     '''
     A utility function to plot data using Matplotlib.
 
@@ -362,7 +429,9 @@ def plot(x, y, legend_name, plot_title='', x_label='X', y_label='Y', plot_type='
         plot_type (str, optional): The type of plot to generate. Options are:
             - `'curve'` (default): Plots lines using `plt.plot`.
             - `'scatter'`: Plots points using `plt.scatter`.
+            - `'with point'` (Only available for single drawing mode): 
         legend_title (str, optional): The title of the legend box. Defaults to an empty string.
+        data_point (tuple of lists/arrays): Plot a curve with the data points. You must pass in something of the form (x_data_point, y_data_point). Also, only single plotting mode is available.
 
     Returns:
         None: The function does not return a value but displays the generated plot.
@@ -390,12 +459,14 @@ def plot(x, y, legend_name, plot_title='', x_label='X', y_label='Y', plot_type='
         for i in range(len(y)):
             if plot_type == 'curve':
                 plt.plot(x, y[i], label=legend_name[i])
-            if plot_type == 'scatter':
+            elif plot_type == 'scatter':
                 plt.scatter(x, y[i], label=legend_name[i])
     else:
         if plot_type == 'curve':
-            plt.plot(x, y, label=legend_name)
-        if plot_type == 'scatter':
+            plt.plot(x, y, label=legend_name, zorder=1)
+            if data_point != None:
+                plt.scatter(data_point[0], data_point[1], label='Data Point', color=firefly('fblack'), s=150, marker='x', zorder=2)
+        elif plot_type == 'scatter':
             plt.scatter(x, y, label=legend_name)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
