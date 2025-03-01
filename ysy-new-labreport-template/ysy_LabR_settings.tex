@@ -82,7 +82,6 @@
 \usepackage{amssymb} % 包含更多数学符号
 
 
-
 % ----------------------------------------------------- 
 % 定义彩色环境
 \usepackage{tcolorbox}
@@ -117,6 +116,29 @@
 	boxed title style = {sharp corners},
 	fonttitle = \bfseries,
 	title={#2},#1}
+	
+% 代码块
+\definecolor{wt1}{HTML}{ebebeb} % 白色主题的标题框顶部背景颜色
+\definecolor{wt2}{HTML}{bebebe} % 白色主题的标题框底部背景颜色
+\definecolor{wt3}{HTML}{efefef} % 白色主题的正文部分的背景颜色
+\definecolor{circ1}{HTML}{eb605b} % 标题框左边第一个圆圈的颜色
+\definecolor{circ2}{HTML}{f6bb31} % 标题框左边第二个圆圈的颜色
+\definecolor{circ3}{HTML}{56cb45} % 标题框左边第三个圆圈的颜色
+\definecolor{macosbox@bord}{RGB}{182,176,176}
+\newtcolorbox{macbox}[2][]{
+	enhanced,
+	breakable,
+	coltitle=black,
+	colback = wt3,%macosbox@bg,
+	boxrule=0mm,
+	frame style={draw=macosbox@bord,fill=macosbox@bord},
+	title style={top color=wt1,bottom color=wt2},
+	drop fuzzy shadow=black,
+	title={{\textcolor{circ1}{\huge$\bullet$}
+			\textcolor{circ2}{\huge$\bullet$}
+			\textcolor{circ3}{\huge$\bullet$}
+			\hspace*{\fill}\texttt{#2}\hspace*{65mm}\hspace*{\fill}}},#1
+}
 
 % ---------------------------------------------------------------------
 %	利用cleveref改变引用格式，\cref是引用命令
@@ -139,8 +161,9 @@
 % 设置页脚线的颜色和粗细
 \renewcommand{\footrule}{\color{fgraygreen}\hrule width\textwidth height 2pt}
 % 自定义页眉
-\fancyhead[L]{\textcolor{fgrayblue}{近代物理实验II}}
-\fancyhead[R]{\textcolor{fgrayblue}{电阻热噪声玻尔兹曼常量测量}}
+%\fancyhead[L]{\textcolor{fgrayblue}{近代物理实验II}}
+%\fancyhead[R]{\textcolor{fgrayblue}{电阻热噪声玻尔兹曼常量测量}}
+\fancyhead[R]{\textcolor{fgrayblue}{电阻热噪声玻尔兹曼常量测量}} % 新的一种更简洁的设置，用哪个看自己喜好
 % 自定义页脚内容
 \fancyfoot[L]{\textcolor{fgrayblue}{杨舒云，戴鹏辉}}
 \fancyfoot[R]{\textcolor{fgrayblue}{\textbf{\thepage}}}
@@ -153,21 +176,27 @@
 \usepackage{titletoc}
 
 % \titleformat{章节}[形状]{格式}{标题序号}{序号与标题间距}{标题前命令}[标题后命令]
+%\titleformat{\section}
+%{\normalfont\bfseries\color{fgraygreen}\huge}
+%{\thesection}
+%{1em}
+%{}
+% 适配流萤主题，不喜欢可以用上面那个
 \titleformat{\section}
 {\normalfont\bfseries\color{fgraygreen}\huge}
-{\thesection}
-{1em}
+{$\liuyin$}
+{0.7em}
 {}
 \titleformat{\subsection}
 {\normalfont\bfseries\color{fgrayblue}\LARGE} % 设置字体、大小、颜色
 {\thesubsection} % 设置subsection编号的格式
-{1em} % 编号和标题之间的间距
+{0.618em} % 编号和标题之间的间距
 {}
 \setcounter{secnumdepth}{3}
 \titleformat{\subsubsection}
 {\normalfont\bfseries\color{fgrayblue}\Large} % 设置字体、大小、颜色
 {\thesubsubsection} % 设置subsubsection编号的格式
-{1em} % 编号和标题之间的间距
+{0.618em} % 编号和标题之间的间距
 {}
 
 
@@ -182,10 +211,10 @@
 \usepackage{listings}
 \lstloadlanguages{python}
 \lstdefinestyle{pythonstyle}{
-	backgroundcolor=\color{gray!6},
+	%backgroundcolor=\color{gray!6},% 用macbox就注释掉这一行
 	language=python,
 	frameround=tftt,
-	frame=shadowbox, 
+	%frame=shadowbox, % 用macbox就注释掉这一行
 	keepspaces=true,
 	breaklines,
 	columns=spaceflexible,      
@@ -201,7 +230,8 @@
 	numbers=left, % 代码行数
 	numberstyle=\scriptsize\color{fgrayblue}, % 代码行数的数字字体设置
 	stepnumber=1,
-	rulesepcolor=\color{fsilver}
+	numbersep=0pt % 代码行号和代码主体之间的距离，不用macbox就注释掉这一行
+	%rulesepcolor=\color{fsilver} % 用macbox就注释掉这一行
 }
 
 
@@ -221,10 +251,15 @@
 \setlist[enumerate,3]{label=\textcolor{fblack}{\roman*.}, font=\bfseries\color{fblack}}
 \setlist[enumerate,4]{label=\textcolor{fblack}{(\roman*)}, font=\bfseries\color{fblack}}
 
-% 设置无序列表格式
-\setlist[itemize,1]{label=\textcolor{fbluegreen}{$\blacktriangleright$}, font=\bfseries\color{fbluegreen}}
-\setlist[itemize,2]{label=\textcolor{fbluegreen}{$\bullet$}, font=\bfseries\color{fbluegreen}}
-\setlist[itemize,3]{label=\textcolor{fbluegreen}{$\blacksquare$}, font=\bfseries\color{fbluegreen}}
+%% 设置无序列表格式
+%\setlist[itemize,1]{label=\textcolor{fbluegreen}{$\blacktriangleright$}, font=\bfseries\color{fbluegreen}}
+%\setlist[itemize,2]{label=\textcolor{fbluegreen}{$\bullet$}, font=\bfseries\color{fbluegreen}}
+%\setlist[itemize,3]{label=\textcolor{fbluegreen}{$\blacksquare$}, font=\bfseries\color{fbluegreen}}
+
+% 我更新了流萤主题配置的无序列表，如果你并非流萤厨，你可以用上面那个
+\setlist[itemize,1]{label=$\liuyin$}
+\setlist[itemize,2]{label=\textcolor{fred}{$\blacktriangleright$}, font=\bfseries\color{fred}}
+\setlist[itemize,3]{label=\textcolor{fbluegreen}{$\bullet$}, font=\bfseries\color{fbluegreen}}
 
 
 % ---------------------------------------------------------------------
@@ -276,4 +311,12 @@
 % 粗糙的、用于偷懒的参考文献条目（中文版）
 \newcommand{\ysyRef}[7]{
 	\item\label{ref:#1} #2\quad#3[#4]. \emph{#5}, #6, #7.
+}
+
+% 添加了全新的流萤配套主题图标
+\newcommand{\liuyin}{\mathord{\raisebox{-0.2ex}{\includegraphics[height=0.8em]{images/theme/liuyin_icon.png}}}}
+
+% 强调
+\newcommand{\ysyEmph}[1]{
+	\textcolor{flameorange}{#1}
 }
