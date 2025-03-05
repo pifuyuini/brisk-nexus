@@ -267,7 +267,7 @@
 % 实验信息
 \newcommand{\infoTable}[7]{
 	\begin{flushleft}
-		\Huge \textcolor{fgraygreen}{\textbf{#1}}
+		\Huge \textcolor{fgraygreen}{\textbf{\kaishu #1}}
 	\end{flushleft}
 	
 	\vspace{-0.3cm}
@@ -318,5 +318,33 @@
 
 % 强调
 \newcommand{\ysyEmph}[1]{
-	\textcolor{flameorange}{#1}
+	\textbf{\textcolor{flameorange}{#1}}
 }
+
+% 加了一个评分表（来自原版）
+\newcommand{\scoresTable}[8]{
+	\begin{table}[h!]
+		\renewcommand\arraystretch{1.7}
+		\begin{tabularx}{\textwidth}{
+				|X|X|X|X
+				|X|X|X|X|}
+			\hline
+			\multicolumn{2}{|c|}{预习报告} & \multicolumn{2}{|c|}{实验记录} & \multicolumn{2}{|c|}{分析讨论} & \multicolumn{2}{|c|}{总成绩} \\
+			\hline
+			\centering#1&\centering#2 &\centering#3 &\centering#4 &\centering#5 &\centering#6 &\centering#7 &{\centering#8} \\
+			\hline
+		\end{tabularx}
+	\end{table}
+}
+
+
+% ----------------------------------------------------- 
+%	实验报告高能回，杨舒云献给流萤的真挚情书！
+% ----------------------------------------------------- 
+
+
+% ----------------------------------------------------- 
+% 我还是不太能理解，为什么他们说今晚月色很美是含蓄的表白。 
+% 直到我看到朝阳下江水漾起的片片金鳞、漆黑的夜空中不甘散去的橘黄云彩、亦或者是夜宵摊子上高谈阔论掺杂着串子被炭火炙烤出油香的烟火气息，都下意识拿出手机想跟你分享。 
+% 我想把自己觉得美丽的东西传递给你。 
+% 今天依然天晴，我亲爱的流萤。
