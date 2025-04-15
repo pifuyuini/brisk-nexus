@@ -1,0 +1,59 @@
+% 基础物理实验的封面
+
+\newcommand{\Grade}{}
+\newcommand{\SchoolNumber}{}
+\newcommand{\LabTime}{}
+
+\newcommand{\scoresTable}[8]{
+	\begin{table}
+		\renewcommand\arraystretch{1.7}
+		\begin{tabularx}{\textwidth}{
+				|X|X|X|X
+				|X|X|X|X|}
+			\hline
+			\multicolumn{2}{|c|}{预习报告} & \multicolumn{2}{|c|}{实验记录} & \multicolumn{2}{|c|}{分析讨论} & \multicolumn{2}{|c|}{总成绩} \\
+			\hline
+			\centering#1&\centering#2 &\centering#3 &\centering#4 &\centering#5 &\centering#6 &\centering#7 &{\centering#8} \\
+			\hline
+		\end{tabularx}
+	\end{table}
+}
+\newcommand{\infoTable}[6]{
+	\begin{table}
+		\renewcommand\arraystretch{1.7}
+		\begin{tabularx}{\textwidth}{|X|X|X|X|}
+			\hline
+			专业：& #1 &年级：& #2\\
+			\hline
+			姓名：& #3   & 学号：&#4\\
+			\hline
+			实验时间：&#5 & 教师签名：&#6 \\
+			\hline
+		\end{tabularx}
+	\end{table}
+}
+
+\newcommand{\YsyCoverPage}[1]{%
+\scoresTable{}{}{}{}{}{}{}{}
+
+% \infoTable{专业}{年级}{姓名}{学号}{实验时间}{教师签名}
+\infoTable{物理学}{\Grade}{\AuthorName}{\SchoolNumber}{\LabTime}{}
+
+\begin{center}
+	\LARGE \TitleName
+\end{center}
+
+\textbf{【实验报告注意事项】}
+\begin{enumerate}
+	\item 实验报告由三部分组成：
+	\begin{enumerate}
+		\item 预习报告：（提前一周）认真研读\underline{\textbf{实验讲义}}，弄清实验原理；实验所需的仪器设备、用具及其使用（强烈建议到实验室预习），完成课前预习思考题；了解实验需要测量的物理量，并根据要求提前准备实验记录表格（第一循环实验已由教师提供模板，可以打印）。预习成绩低于10分（共20分）者不能做实验。
+		\item 实验记录：认真、客观记录实验条件、实验过程中的现象以及数据。实验记录请用珠笔或者钢笔书写并签名（\textcolor{EmphColor}{\textbf{用铅笔记录的被认为无效}}）。\textcolor{EmphColor}{\textbf{保持原始记录，包括写错删除部分，如因误记需要修改记录，必须按规范修改。}}（不得输入电脑打印，但可扫描手记后打印扫描件）；离开前请实验教师检查记录并签名。
+		\item 分析讨论：处理实验原始数据（学习仪器使用类型的实验除外），对数据的可靠性和合理性进行分析；按规范呈现数据和结果（图、表），包括数据、图表按顺序编号及其引用；分析物理现象（含回答实验思考题，写出问题思考过程，必要时按规范引用数据）；最后得出结论。
+	\end{enumerate}
+	\textbf{实验报告就是将预习报告、实验记录、和数据处理与分析合起来，加上本页封面。}
+	\item 每次完成实验后的一周内交\textbf{实验报告}（特殊情况不能超过两周）。
+	\item 除实验记录外，实验报告其他部分建议双面打印。
+\end{enumerate}
+#1
+}
