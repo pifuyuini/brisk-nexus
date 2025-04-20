@@ -1,0 +1,483 @@
+% !TEX root = ../control.tex
+
+\section{仪器基本信息}
+
+本次调研的对象为 \YsyEmph{Rosemount 214C 铂电阻温度传感器（RTD Temperature Sensor）}（如\cref{fig:imphw1img214c}所示），由美国艾默生自动化解决方案（\emph{Emerson Automation Solutions}）旗下的 Rosemount 品牌研制与生产。该仪器属于工业级温度测量设备，采用 \YsyMark{电阻温度检测器（Resistance Temperature Detector, RTD）} 的工作原理，以铂电阻元件（通常为 Pt100）为核心传感单元，具备 \YsyEmph{测量稳定性高、响应快、长期漂移小} 等性能优势。
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{images/imp_hw1_img_214c}
+	\caption{Rosemount 214C 铂电阻温度传感器（\cref{ref:emerson214c}）}
+	\label{fig:imphw1img214c}
+\end{figure}
+
+Rosemount 214C 系列温度传感器面向通用工业测温场合，适用于包括石油化工、电力、冶金、制药等在内的多个行业。产品符合 \YsyMark{IEC 60751}、\YsyMark{ASTM E2877} 等国际标准，提供多种传感元件类型、安装连接方式、保护套管材质和信号输出选项（如是否集成变送器），以满足不同工程应用的需求。
+
+具体型号采用模块化编号方式，例如214C4A1A0000A5，每一字段均指代特定的产品配置参数，如 元件精度、引线类型、过程连接尺寸等。
+
+作为艾默生旗下的重要温度测量产品，214C 具备完善的安全认证体系，包括 \YsyMark{CSA}、\YsyMark{ATEX} 和 \YsyMark{IECEx} 防爆认证，能够在潜在危险区域稳定运行，体现了其在工业场景下的\YsyEmph{高可靠性与适应性}。
+
+在市场价格方面，214C 传感器根据用户选型的不同配置存在一定差异。综合多个代理商与工业品平台信息，其价格范围通常在200美元到800美元。
+
+由于其为定制化产品，建议用户通过艾默生官网或授权代理商进行选型，并获取对应技术支持与正式报价。常见采购渠道包括艾默生官网本地化平台、各地工控自动化分销商，以及国际工业电商平台如 RS Components 和 Omega 等。
+
+\section{技术参数与标准}
+
+Rosemount 214C系列温度传感器依据国际标准制造，采用高精度 PT100 铂电阻元件，提供稳定可靠的工业级温度测量。其关键性能参数如下所列。
+
+\subsection{测量范围（量程）}
+
+214C 传感器支持多种测温元件，常见配置为绕线型或薄膜型 PT100 电阻元件，不同构型对应的工作温度范围如下：
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|p{8cm}|}
+		\hline
+		\textbf{元件类型} & \textbf{测量范围} & \textbf{特性说明} \\
+		\hline
+		RW（绕线型） & \SI{-196}{\degreeCelsius} ~至~ \SI{+600}{\degreeCelsius} & 适用于超低温与高温场合，长期稳定性优于薄膜型。 \\
+		\hline
+		RT（薄膜型） & \SI{-50}{\degreeCelsius} ~至~ \SI{+450}{\degreeCelsius} & 快速响应、抗振性强，适用于通用工业应用。 \\
+		\hline
+		RH（高温薄膜型） & \SI{-60}{\degreeCelsius} ~至~ \SI{+600}{\degreeCelsius} & 提升了薄膜元件的耐高温能力，同时保持快速响应特性。 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+此外，该传感器通过机械接口与 Thermowell（保护套管）集成使用时，可实现更宽量程应用，满足过程控制中对深度插入或极端温差环境的需求。
+
+\subsection{精度与分辨率}
+
+本系列产品支持 \YsyMark{IEC 60751} 标准下的 \YsyEmph{Class A} 与 \YsyEmph{Class B} 精度等级。典型精度规范如下：
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{精度等级} & \textbf{温度范围} & \textbf{最大允许误差 $\Delta t$（\si{\degreeCelsius}）} \\
+		\hline
+		\textbf{Class A} & 
+		\begin{tabular}{@{}c@{}} \SI{-100}{\degreeCelsius}~至~\SI{+450}{\degreeCelsius}（绕线型） \\
+			\SI{0}{\degreeCelsius}~至~\SI{+300}{\degreeCelsius}（薄膜型） \end{tabular} 
+		& 
+		$
+		\pm(0.15 + 0.002|t|)
+		$ \\
+		\hline
+		\textbf{Class B} & \SI{-196}{\degreeCelsius}~至~\SI{+600}{\degreeCelsius} & 
+		$
+		\pm(0.30 + 0.005|t|)
+		$ \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\YsyAnnotation{注：} $t$ 为测量温度值，单位为 \si{\degreeCelsius}。
+
+当搭配原厂温度变送器使用时，用户可通过 \YsyMark{Callendar--Van Dusen 常数匹配校准（CVD Calibration）} 进一步提升系统精度。
+
+在 \YsyEmph{分辨率方面}，RTD 元件本身的连续电阻输出支持高分辨率采集；系统分辨率取决于变送器或测控系统的 A/D 采样精度，通常可达 \SI{0.01}{\degreeCelsius} 级别。
+
+\subsection{执行标准}
+
+214C 系列的设计、测试与校准过程全面遵循以下工业标准与技术规范。
+
+\YsyMark{IEC 60751:2008} 是 RTD 元件制造与性能测试的核心标准，规范涵盖了铂电阻元件的公差等级、响应时间测试方法、绝缘电阻测试、电阻漂移、温漂稳定性、热滞后等关键性能指标。
+
+关键符合项摘要如下：
+
+\begin{itemize}
+	\item \textbf{绝缘电阻}：≥ \SI{1000}{\mega\ohm}（在 \SI{500}{\volt}(DC) 下测得，室温条件）；
+	\item \textbf{响应时间}：T$_{50}$ ≤ \SI{10.8}{\second}（在流动水中测试）；
+	\item \textbf{稳定性}：冰点电阻最大偏移 ±\SI{0.15}{\degreeCelsius}（\SI{1}{\gram} 震动，\SI{1000}{\hour}，参考 IEC 60751:2008 6.5.3）；
+	\item \textbf{电阻漂移}：不超过 \SI{0.020}{\ohm}（冰点条件下）；
+	\item \textbf{振动耐受性}：绕线型传感器在 \SI{1}{\gram} 振动、\SIrange{20}{500}{\hertz}、\SI{150}{\hour} 条件下电阻变化不超过最大限值（IEC 60751:2008 6.6.4）。
+\end{itemize}
+
+此外还包括：
+
+\YsyMark{ASTM E2877} 与 \YsyMark{ITS-90 温标}，用于定义高精度测温的互换性要求与校准方法。
+
+\YsyAnnotation{可选校准服务}：支持单点或多点温度校准，所有校准过程均可根据用户需求进行，并出具 \YsyEmph{溯源校准证书（Calibration Certificate）}。
+
+214C 产品亦通过多项工业防爆认证，包括 ATEX、IECEx、CSA、FM 等，其具体认证信息将在“产品认证与使用环境”章节中详细说明。
+
+\section{适用条件与使用场景}
+Rosemount 214C系列温度传感器专为工业过程环境中的温度监测与控制而设计，具备优良的机械强度、电气绝缘性能与环境适应性。其适用条件涵盖环境、机械、电气等多方面要求，具体如下。
+
+\subsection{环境适用条件}
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|p{10cm}|}
+		\hline
+		\textbf{项目} & \textbf{典型规格或说明} \\
+		\hline
+		\YsyMark{环境温度范围} & \SI{-60}{\degreeCelsius} 至 \SI{+80}{\degreeCelsius}（依据外壳/安装件等级） \\
+		\hline
+		\YsyMark{振动承受能力} & 最高支持 \SI{1}{\gram}（绕线型）或 \SI{3}{\gram}（薄膜型），频率范围 \SIrange{20}{500}{\hertz}，持续 \SI{150}{\hour}，符合 IEC 60751:2008 要求 \\
+		\hline
+		\YsyMark{绝缘耐压} & ≥\SI{1000}{\mega\ohm} @ \SI{500}{\volt}(DC)（室温） \\
+		\hline
+		\YsyMark{防护等级} & 达到 \YsyEmph{IP66 / IP67}（依据选用的连接头与安装方式） \\
+		\hline
+		\YsyMark{防爆/防火认证} & 可选配 ATEX、IECEx、CSA、FM、NEPSI 认证，满足 Zone 0/1/2 和 Class I/II/III, Div 1/2 等要求 \\
+		\hline
+		\YsyMark{安装深度限制} & 最小插入深度为 \SIrange{30}{50}{\milli\meter}（取决于元件类型） \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\YsyAnnotation{注：}在粉尘或高湿度环境中使用时，推荐配置防护等级高的接线盒与密封件，并使用 Thermowell 以增强结构隔离与热响应稳定性。
+
+\subsection{典型使用场景}
+
+Rosemount 214C温度传感器凭借卓越的测量稳定性、高精度与广泛的结构配置能力，被广泛部署于各类 \YsyMark{连续与批量过程控制系统} 中。以下为其在多个关键行业中的典型应用情境。
+\begin{enumerate}
+	\item 石油与天然气工业（Petrochemical \& Natural Gas Processing）
+	
+	温度控制直接关联反应效率与系统安全性。常见部署包括：
+	
+	\YsyAnnotation{原油初级处理与输送}：在大口径管道或伴热管线中监测流体温度，需具备抗腐蚀、抗振与高强度结构。
+	
+	\YsyAnnotation{LNG 工艺流程}：适用于 \SI{-196}{\degreeCelsius} 以下的极低温测量，RW 绕线元件提供优异的低温线性响应。
+	
+	\YsyAnnotation{加氢裂化与催化重整反应控制}：高温测控对反应平衡影响显著，常配合 Class A 精度与隔离套管。
+	
+	\item 能源与发电行业（Power Generation and Energy Storage）
+	
+	在传统与新能源系统中用于热过程分析与安全保障：
+	
+	\YsyAnnotation{火电机组锅炉与过热器}：监测管壁温度防止过热失效，常配弹簧加载结构确保良好接触。
+	
+	\YsyAnnotation{风电与光伏组件热管理}：跟踪运行中温升行为，利于功率衰减预警。
+	
+	\YsyAnnotation{电化学储能系统}：适用于液流电池或锂电池堆，214C 的微型封装与快速响应特性满足热失控监测需求。
+	
+	\item 精细化工与制药工程（Fine Chemicals \& Pharmaceutical Engineering）
+	
+	温度直接影响反应动力学与产品一致性：
+	
+	\YsyAnnotation{高粘度或腐蚀性介质反应器}：配合 316L 或 Inconel 套管，焊接式安装提高长期稳定性。
+	
+	\YsyAnnotation{生物发酵与冷冻干燥过程}：薄膜 RT 元件响应快，适合微温波动的空间监测。
+	
+	\YsyAnnotation{GMP 环境温控验证}：支持多点校准与证书出具，满足 FDA 追溯管理。
+	
+	\item 金属冶炼与热处理工艺（Metallurgy \& Thermal Processing）
+	
+	高温过程的精准控温应用广泛：
+	
+	\YsyAnnotation{连铸与连轧过程}：需配 Thermowell 与弹簧加载装置，防止松动与破损。
+	
+	\YsyAnnotation{真空热处理炉}：在惰性或低压下，传感器需具备低逸散、低热容与高绝缘性能。
+	
+	\YsyAnnotation{焊接/回火/淬火控制}：快速热变中需选响应快、分辨率高的 RT 元件。
+	
+	\item 环境工程与食品行业（Environmental \& Food Engineering）
+	
+	此类应用对测控系统安全合规性要求极高：
+	
+	\YsyAnnotation{城市污水与废气处理}：FEP 绝缘线缆适用于高湿腐蚀性环境，抗垢性能强。
+	
+	\YsyAnnotation{食品冷链与热杀菌监控}：要求精度达 \SI{0.1}{\degreeCelsius}，支持插入式与表面贴附结构。
+	
+	\YsyAnnotation{室外环境暴露场合}：如气象监测场所，可使用铝合金外壳与长引线配置，提高信号稳定性与抗干扰能力。
+\end{enumerate}
+
+\subsection{安装形式与适应性说明}
+
+214C 系列提供多种结构选件以适应各类工艺接口与空间限制条件。常见安装形式包括：
+
+\YsyMark{螺纹压紧式}、\YsyMark{弹簧加载式}、\YsyMark{焊接式} 与 \YsyMark{DIN 卡板式} 等，适配多种安装方式。
+
+此外，常见接线盒（如 AR1、SR1、AJ1 等）提供不同材质、防爆等级与接线方式，以保障严苛工况下的长期稳定运行。
+
+\section{工作原理与结构概述}
+
+\subsection{测温原理概述（热电偶、热敏电阻、RTD）}
+
+工业过程中的温度测量方法种类繁多，常见的温度传感器主要包括 \YsyMark{热电偶（Thermocouple）}、\YsyMark{热敏电阻（Thermistor）} 与 \YsyMark{电阻温度检测器（Resistance Temperature Detector, RTD）}。它们各自基于不同的物理效应，适用于不同的测量精度、温度区间与响应时间要求。以下分别对其基本测温原理进行概述，为后续对 RTD 的深入分析奠定基础。
+
+\subsubsection{热电偶（Thermocouple）}
+
+热电偶是一种基于 \YsyMark{塞贝克效应（Seebeck effect）} 的主动式传感器，由两种不同导体（或半导体）构成的闭合回路组成。当两个接点处于不同温度时，回路中会产生与温差成比例的热电势。常见类型包括 Type K、J、T、E、N 等，对应不同的热电输出特性与工作区间。
+
+\YsyAnnotation{测温原理表达式：}
+\begin{equation}
+E = \int_{T_\text{ref}}^{T} S(T')\, \Diff T'
+\end{equation}
+其中 $E$ 为热电动势，$S(T)$ 为热电势系数，$T_\text{ref}$ 为参考端温度，$T$ 为热端温度。
+
+\YsyAnnotation{特点}：
+\begin{itemize}
+\item 测量范围宽（\SI{-200}{\degreeCelsius} 至 \SI{1800}{\degreeCelsius}）；
+\item 响应快，适用于剧烈温变环境；
+\item 精度中等，需冷端补偿。
+\end{itemize}
+
+\subsubsection{热敏电阻（Thermistor）}
+
+热敏电阻是一种基于 \YsyMark{半导体材料的非线性电阻变化特性} 的测温元件。其电阻值对温度极其敏感，常分为 NTC（负温度系数）与 PTC（正温度系数）两类。
+
+\YsyAnnotation{近似模型（NTC）：}
+\begin{equation}
+R(T) = R_0 \cdot \EulerE^{\beta \left( \frac{1}{T} - \frac{1}{T_0} \right)}
+\end{equation}
+其中 $R_0$ 为参考温度 $T_0$ 下的阻值，$\beta$ 为材料常数。
+
+\YsyAnnotation{特点}：
+\begin{itemize}
+\item 精度高，适用于小范围精密测温；
+\item 非线性强，需复杂标定；
+\item 温度范围较窄（\SI{-50}{\degreeCelsius} 至 \SI{150}{\degreeCelsius}）。
+\end{itemize}
+
+\subsubsection{电阻温度检测器（RTD）}
+
+RTD 是一种被动式传感器，其工作原理基于 \YsyMark{金属导体电阻随温度线性变化} 的特性。最常用的 RTD 类型为 \YsyMark{Pt100}，即在 \SI{0}{\degreeCelsius} 时电阻为 \SI{100}{\ohm} 的铂电阻元件。
+
+\YsyAnnotation{线性化模型（Callendar–Van Dusen 方程）：}
+\begin{equation}
+R(T) = R_0 [1 + A T + B T^2 + C (T - 100) T^3] \quad (\text{当 } T < \SI{0}{\degreeCelsius})
+\end{equation}
+其中 $A, B, C$ 为经验系数，取决于铂材料的纯度与制备工艺，$R_0$ 为 \SI{0}{\degreeCelsius} 下的电阻值。
+
+\YsyAnnotation{特点}：
+\begin{itemize}
+\item 测量精度高、长期稳定性优异，适用于高精度温控场合；
+\item 温度范围中等（典型为 \SI{-200}{\degreeCelsius} 至 \SI{+600}{\degreeCelsius}）；
+\item 输出为阻值模拟量，需配合高分辨率测量系统；
+\item 受引线电阻影响，常采用三线制或四线制补偿误差。
+\end{itemize}
+
+\vspace{0.5em}
+
+\noindent\YsyEmph{综上所述}，在需要兼顾 \YsyEmph{测量精度、长期稳定性与可重复性} 的工业应用中，\YsyMark{RTD 传感器} 尤其适用于精细化温度控制场景，也是 Rosemount 214C 传感器选用的核心测温元件类型。下一节将进一步展开对 RTD 工作原理与电学模型的详细讨论。
+
+\subsection{RTD 原理}
+
+\YsyMark{电阻温度检测器}（Resistance Temperature Detector, RTD）是一类以导体或半导体材料在温度变化下的电阻响应为基础的 \YsyEmph{被动式温度传感器}。在工业与计量应用中，RTD 特别指以 \YsyMark{纯铂丝（Pt）} 为敏感元件的高精度传感器，最常见者为 \YsyMark{Pt100}（即 \SI{0}{\degreeCelsius} 时电阻为 \SI{100}{\ohm}）。其测温原理建立在金属材料的电阻与温度间存在明确可重复的函数关系之上，是当前最常见的接触式精密温度测量方案之一。
+
+\subsubsection{温度-电阻关系（R--T 关系）}
+
+在一定温度范围内，金属导体的电阻随温度的升高而增大，其数学模型在工程中通常采用 \YsyMark{Callendar–Van Dusen 方程} 描述：
+
+\begin{equation}
+	R(T) = R_0 (1 + AT + BT^2) \quad \text{（当 } T \geq \SI{0}{\degreeCelsius} \text{）}
+\end{equation}
+
+\begin{equation}
+	R(T) = R_0 [1 + AT + BT^2 + C(T - 100)T^3] \quad \text{（当 } T < \SI{0}{\degreeCelsius} \text{）}
+\end{equation}
+
+其中：$R(T)$：温度 $T$ 时的电阻；$R_0$：\SI{0}{\degreeCelsius} 时的电阻（例如 Pt100 为 \SI{100.000}{\ohm}）；$A = 3.9083 \times 10^{-3}~{}^\circ\mathrm{C}^{-1}$；$B = -5.775 \times 10^{-7}~{}^\circ\mathrm{C}^{-2}$；$C = -4.183 \times 10^{-12}~{}^\circ\mathrm{C}^{-4}$（仅用于负温段）。
+
+该非线性模型在 \SI{-200}{\degreeCelsius} 至 \SI{+850}{\degreeCelsius} 范围内具备良好拟合度，是 Pt100/Pt1000 工业铂电阻元件的标准建模方式。
+
+\subsubsection{温度系数（TCR）}
+
+\YsyMark{温度系数（Temperature Coefficient of Resistance, TCR）} 描述金属材料单位温度变化下的相对电阻变化量，定义如下：
+
+\begin{equation}
+	\alpha = \frac{R_{100} - R_0}{100\,^\circ\mathrm{C} \cdot R_0}
+\end{equation}
+
+不同铂元素标准的 $\alpha$ 值如下：
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|c|l|}
+		\hline
+		\textbf{类型} & $\alpha$ (\si{\ohm\per\ohm\per\celsius}) & \textbf{说明} \\
+		\hline
+		实验室纯铂 & 0.003925 & 最高线性度，少数实验室应用 \\
+		工业标准（IEC 60751） & \textbf{0.00385} & 最常见，适用于 Pt100 与 Pt1000 \\
+		美国旧标准（SAMA） & 0.00392 & 少数老型号设备中出现 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+该参数直接影响 RTD 的灵敏度与线性程度，是传感器选型与校准的重要指标。
+
+\subsubsection{构造类型}
+
+RTD 元件按制造工艺分为以下几类：
+
+\YsyMark{薄膜型（Thin-Film Element）}：通过溅射工艺将极薄铂层沉积在陶瓷基底上，加涂保护膜后封装。结构紧凑，响应快速，适用于空间受限场合。最高工作温度约为 \SIrange{300}{600}{\degreeCelsius}。
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{images/imp_hw1_img_Thin_Film_PRT}
+	\caption{薄膜型（\cref{ref:wikiRTD}）}
+	\label{fig:imphw1imgthinfilmprt}
+\end{figure}
+
+\YsyMark{绕线型（Wire-Wound Element）}：将铂丝绕在绝缘骨架（如陶瓷或玻璃）上，稳定性高，适合中高温与精密测量，温度上限达 \SI{660}{\degreeCelsius}。
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.3\linewidth]{images/imp_hw1_img_Wire_Wound_PRT}
+	\caption{绕线型（\cref{ref:wikiRTD}）}
+	\label{fig:imphw1imgwirewoundprt}
+\end{figure}
+
+\YsyMark{应力释放绕线型（Coiled Element）}：将铂丝绕制成线圈置于陶瓷芯管中，并填充陶瓷粉末。既确保热响应性，又容许热膨胀，综合性能优异，工作温度最高可达 \SI{850}{\degreeCelsius}。
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.3\linewidth]{images/imp_hw1_img_Coil_Element_PRT}
+	\caption{应力释放绕线型（\cref{ref:wikiRTD}）}
+	\label{fig:imphw1imgcoilelementprt}
+\end{figure}
+
+\subsubsection{接线方式}
+
+由于 RTD 输出为电阻信号，导线阻值可能带来误差。工业中采用以下补偿结构：
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|p{11cm}|}
+		\hline
+		\textbf{接线方式} & \textbf{原理说明} \\
+		\hline
+		\YsyMark{二线制} & 简单连接方式，导线电阻混入传感器电阻中，误差不可忽略，仅适用于低精度应用。 \\
+		\hline
+		\YsyMark{三线制} & 通过对称电桥设计抵消一侧导线电阻，是工业测控中最常见的布线方式。 \\
+		\hline
+		\YsyMark{四线制} & 利用两线供电、两线测压的方式，彻底消除导线电阻影响，适用于高精度与计量实验场景。 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{images/imp_hw1_img_RTD_3Wire}
+	\caption{三线制（\cref{ref:wikiRTD}）}
+	\label{fig:imphw1imgrtd3wire}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{images/imp_hw1_img_4wire2}
+	\caption{四线制（\cref{ref:wikiRTD}）}
+	\label{fig:imphw1img4wire2}
+\end{figure}
+
+
+\subsubsection{校准方法}
+
+虽然 RTD 在 \SIrange{0}{100}{\degreeCelsius} 区间近似线性，但工业与计量应用中仍需进行校准以确保准确性。
+
+\YsyAnnotation{固定点校准}：利用冰点、锡点、锌点等已知温度固定点构建 ITS-90 温标，实现 \SI{0.001}{\degreeCelsius} 级别精度，适用于国家计量实验室。
+
+\YsyAnnotation{比较校准}：将待校准传感器与标准温度计放置于恒温体中进行比对，适用于工业批量或高温段校准需求。
+
+\subsubsection{综合性能评价}
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|p{9.5cm}|}
+		\hline
+		\textbf{指标} & \textbf{典型值（以 Pt100 为例）} \\
+		\hline
+		测温范围 & \SI{-200}{\degreeCelsius} 至 \SI{+850}{\degreeCelsius} \\
+		灵敏度 & \SI{0.385}{\ohm\per\celsius}（IEC 60751 标准） \\
+		精度等级 & Class A / B / C（F 0.15 / 0.3 / 0.5） \\
+		响应时间 & T90 ≈ \SIrange{5}{25}{\second}（依封装与安装条件） \\
+		稳定性 & 年漂移 < \SI{0.05}{\degreeCelsius}（优质绕线型） \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\vspace{0.5em}
+
+\noindent 相比热电偶，RTD 在 \YsyEmph{重复性、长期稳定性与系统线性度} 方面具有显著优势。尤其在 \SI{-200}{\degreeCelsius} 至 \SI{+600}{\degreeCelsius} 区间内表现优异，是自动化控制系统与精密测温实验中的首选传感器类型。
+
+\subsection{Rosemount 旧型号 444R 原理图解析}
+
+为辅助理解 Rosemount 214C RTD 传感器的信号处理机制，可参考其前代产品 \YsyEmph{Rosemount 444R 温度变送器} 的工作原理与结构图（\cref{fig:imphw1img444r}）。444R 作为一款集成式温度变送器，采用三线或四线 RTD 接入，能够将传感器的非平衡电桥信号转化为标准化的 \SIrange{4}{20}{\milli\ampere} 输出电流，广泛应用于工业自动化温度采集系统中。
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.85\linewidth]{images/imp_hw1_img_444r}
+	\caption{Rosemount 444R 温度变送器结构图（\cref{ref:a}）}
+	\label{fig:imphw1img444r}
+\end{figure}
+
+\subsubsection{系统结构与信号流程}
+
+\cref{fig:imphw1img444r}展示了 Rosemount 444R 的功能框图，其核心构成模块包括：\YsyMark{电阻桥（Resistance Bridge Circuit）}：接入三线或四线 RTD 元件，形成温度相关的电阻失衡信号，作为温度变化的原始感知通道。\YsyMark{恒流源（Current Source）}：提供恒定激励电流 $i_c$，确保电桥工作稳定。电桥中 RTD 所在支路的电压随温度而变化，从而引出差动电压信号。\YsyMark{调制器–放大器–解调器（Modulator–Amp–Demodulator）}：引入固态调制器，将微弱差动信号转换为交流信号；再经由交流放大器放大后解调为直流，供后续信号控制环节使用。\YsyMark{反馈控制与电流调节（Feedback \& Current Control）}：实现闭环反馈调节机制，自动调整基准臂电流 $i_s$，抵消温漂带来的电桥失衡，使输出电流在 \SIrange{4}{20}{\milli\ampere} 范围内线性响应于测温结果。\YsyMark{输出与电源调理（Voltage Regulator \& Loop Power Supply）}：提供两线制标准工业电流环输出，支持多量程选项（\SIrange{25}{75}{\degreeCelsius}、\SIrange{70}{210}{\degreeCelsius}、\SIrange{200}{600}{\degreeCelsius}），并实现电源与信号复用，简化布线。
+
+\subsubsection{原理解析与物理图像}
+
+该系统以 \YsyEmph{温度依赖的电桥失衡电压} 为输入源，通过 \YsyEmph{交流调制与高增益放大} 手段，将微小电压变化放大至可测量范围，再由 \YsyMark{反馈控制模块} 调节系统内部参考支路电流，使电桥重新平衡，从而实现对 RTD 电阻变化的线性测量与标准化输出。关键优势包括\YsyEmph{自动电桥平衡反馈}，显著抑制温漂影响；\YsyEmph{交流调制–解调} 技术，有效抑制低频噪声与直流偏移误差；\YsyEmph{恒流激励}，提高线性度与测量灵敏度；\YsyEmph{结构紧凑}，便于与 RTD 一体化安装，无需外接信号调理模块。
+
+尽管 Rosemount 214C 未公开其完整内部结构，但作为同一产品族的后续型号，其设计理念显然传承以下技术思路：采用 \YsyMark{恒流激励} 原理激发 RTD；通过内部信号调理模块将电桥输出转换为 \SIrange{4}{20}{\milli\ampere} 或电压信号；实现 \YsyMark{传感器与变送器一体化}，适应工业现场恶劣环境；支持 \YsyMark{三线/四线制 RTD} 接入方式，增强抗引线误差能力。
+
+\subsubsection{小结与补充说明}
+
+根据 Rosemount 官方发布的 \YsyMark{《Model 444 Alphaline Temperature Transmitters》} 手册，我们可对其原理图与模块功能进一步补充说明：
+\begin{itemize}
+	\item 测量链路清晰，信号稳定机制完善：
+	
+	从输入端起，444R 支持多种 RTD 接法（2/3/4 线），通过桥路差动放大与恒流激励实现高精度温度采集。信号链如下：
+	\begin{itemize}
+		\item 电阻桥（Resistance Bridge Circuit）；
+		\item 恒流源（Current Source）；
+		\item 固态调制器（Modulator）；
+		\item 解调与直流恢复模块（Demodulator）；
+		\item 电流控制放大器；
+		\item 电压调节器与回路供电模块。
+	\end{itemize}
+	交流调制–解调机制不仅增强抗干扰能力，还改善温漂与非线性误差控制，适用于远距离信号传输与复杂工业现场。
+	
+	\item 系统适应性强，便于工业维护：
+	
+	支持多种测温类型（Pt100/Pt1000 等）与不同量程配置，可通过：\YsyMark{粗零点跳线（Coarse Zero Jumper）}和\YsyMark{精细调零/调满旋钮}来完成现场调试。相关性能指标包括：测温范围：\SIrange{25}{600}{\degreeCelsius} 三段可选；环境温度适应范围：\SIrange{-25}{85}{\degreeCelsius}；防爆、防腐、防湿结构设计，含密封环与电气隔离；支持远程支架安装，增强抗振能力。
+	
+	\item 非线性误差补偿机制：
+	
+	RTD 电阻与温度的非线性及引线误差对测量精度影响显著。为此，系统设计了 \YsyMark{外环电流补偿机制（External Loop Current Compensation）}：  
+	用户可通过外部电流调整回路中参考臂 $R_s$ 的电流，以平衡电桥，动态消除非线性误差。
+	
+	\item 安装与维护优化细节：
+	
+	现场部署推荐将变送器直接集成至热电偶保护套管；高温环境下使用延伸接头或隔热组件；外壳支持 \SI{90}{\degree} 分度旋转，便于端子布线；所有接线端子均支持导管引线输入，匹配标准工业布线模式。
+\end{itemize}
+
+\section{仪器优缺点分析}
+
+Rosemount 214C系列铂电阻温度传感器作为工业级高性能 RTD 测温设备，兼具优良的测量精度、结构稳定性与现场适应性，广泛应用于长期可靠运行要求高的工业过程环境。其设计理念延续 Rosemount 品牌“过程完整性优先”的传统，但在部分极端应用中亦存在局限，需结合工况进行适配性评估。
+
+\subsection{主要优点}
+  
+基于标准工业级铂元件（Pt100），并严格遵循 IEC 60751 标准制造，214C 系列传感器在 \SI{-200}{\degreeCelsius} 至 \SI{+600}{\degreeCelsius} 范围内具有出色的线性温阻响应。典型灵敏度为 \SI{0.385}{\ohm\per\celsius}，支持 Class A 精度等级，适用于高精度温控场合。
+
+支持多种安装形式（如螺纹、焊接、弹簧加载等）、护套材质（如 316L、Inconel）、信号输出方式（裸线、接线盒、集成式变送器）与 RTD 元件构型（薄膜型、绕线型、应力释放型）自由组合，适配性极高。铂元件本身具备良好的热稳定性与化学惰性，配合三线或四线接法与高绝缘电阻设计（$\geq \SI{1000}{\mega\ohm} @ \SI{500}{\volt}$(DC)），提升系统在复杂电磁干扰环境中的抗干扰能力与低漂移特性。
+
+支持 ATEX、IECEx、CSA、NEPSI 等多种工业防爆认证，满足 Zone 0/1/2 与 Class I/II/III, Div 1/2 等危险区域应用需求。防护等级最高达 IP67，可适用于高湿度、高腐蚀等严苛环境。
+
+与艾默生旗下如 644、3144P 等温度变送器配套使用，可实现闭环优化控制，包括非线性补偿、故障检测、自校准等智能功能，提升整个温度控制系统的鲁棒性与智能化水平。
+
+\subsection{潜在局限与改进方向}
+
+相较热电偶，RTD 结构更复杂，常需配合保护套管使用以增强机械稳定性，进而牺牲热响应速度。典型 T90 响应时间为 \SIrange{15}{25}{\second}，在快速热变场景下存在响应滞后。
+
+尽管高温型 214C 可工作至 \SI{+600}{\degreeCelsius}，但铂元件在超过 \SI{650}{\degreeCelsius} 的环境下容易受护套杂质扩散污染，阻值漂移显著，因此不适用于 \SI{1000}{\degreeCelsius} 以上的超高温环境，亦无法替代热电偶的极限耐温能力。
+
+远距离测温场合下，引线电阻可能引入误差，需使用三线或四线补偿方式，增加系统布线复杂度与安装工作量。如配套变送器选型不当，也可能限制其精度优势发挥。
+
+相较热电偶或热敏电阻，214C 属中高端产品，典型价格区间为 200到800美元，不适用于一次性测温或低附加值应用场景。
+
+\section{总结}
+
+Rosemount 214C系列电阻温度检测器（RTD）作为艾默生自动化测量系统的重要组成部分，代表了当前工业温度测量在 \YsyEmph{精度、稳定性与工程适应性} 方面的成熟水平。其基于标准 Pt100 的电阻温度特性，结合模块化结构与多种输出配置，广泛服务于石化、电力、制药、冶金、环保等多个行业的关键温控环节。
+
+通过本次调研，对该产品的主要性能、适用条件、工作原理及前代产品结构进行了系统性梳理，可得如下结论：
+
+214C 拥有优异的温度测量能力，尤其适用于 \SI{-200}{\degreeCelsius} 至 \SI{+600}{\degreeCelsius} 区间内对 \YsyMark{精度与重复性} 要求较高的工业场合；结构层面充分考虑工业安装的耐候性与可维护性，具备广泛适应性；信号输出标准化，便于与 DCS/PLC 系统对接；高温响应、布线复杂度与成本控制方面尚存挑战，需结合具体应用场景合理权衡。
+
+综合来看，Rosemount 214C 是一款性能成熟、可靠性高的工业 RTD 传感器，具备显著的推广价值。未来的优化方向可聚焦于：更快的热响应能力；更高的耐温极限；更低成本的模块集成；更智能的状态诊断与误差补偿系统。
+
+本报告系统梳理了 Rosemount 214C 温度传感器的关键结构、工作原理与性能特征，为后续选型评估、系统集成与工程优化提供了重要参考依据。

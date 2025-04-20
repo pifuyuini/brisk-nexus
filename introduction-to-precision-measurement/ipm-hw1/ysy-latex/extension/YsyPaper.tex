@@ -1,0 +1,45 @@
+% ============================================================================
+% 包加载
+\usepackage{amsmath}       % 数学公式排版（align/gather 等环境）
+\usepackage{amssymb}       % 扩展数学符号（如 \mathbb, \mathcal）
+\usepackage{graphicx}      % 图形插入支持（\includegraphics）
+\usepackage{xcolor}        % 颜色定义与控制（\definecolor, \textcolor）
+\usepackage{enumerate}     % 自定义 enumerate 列表编号格式
+\usepackage{multirow}      % 表格多行合并（\multirow, \multicolumn）
+\usepackage{float}        % 浮动体精确控制（[H] 固定位置）
+\usepackage{cleveref}      % 智能交叉引用（\cref, \Cref）
+\usepackage{adjustbox}     % 盒模型调整（缩放/旋转表格或图片）
+\usepackage{physics}       % 物理符号快捷命令（\braket, \dv）
+\usepackage{subfig}        % 子图排版（\subfloat, \subfigure）
+\usepackage{tikz}          % 矢量绘图（需加载 tikz 库）
+\usepackage{hyperref} % 超链接
+\usepackage{tabularx} % 创建自动调整列宽的表格，比 tabular 更灵活。
+\usepackage{tabularray} % 绘制表格时可以更加方便添加框线
+\usepackage{lipsum} % 生成占位文本 \lipsum[1-3]。
+\usepackage{mathrsfs} % 更多更多的字体
+\usepackage{siunitx} % 规范显示单位与物理量 v1.1
+
+% ============================================================================
+% 补充设定
+% 规范显示单位与物理量 v1.1
+\sisetup{
+	per-mode=symbol,      % 使用 '/' 而非 '·'
+	separate-uncertainty = true,  % 不确定度写作 ± 形式
+	detect-all = true,    % 自动检测字体样式（math, text等）
+	inter-unit-product = \cdot,
+}
+
+% ============================================================================
+% 封装
+
+% 物理
+\newcommand{\tensor}[3]{#1^{\mathrm{#2}}_{\phantom{#2}\mathrm{#3}}} % 张量
+
+% 排版规范 v1.1
+% 参考：https://www.bilibili.com/video/BV1WrdkY3ECV
+\newcommand{\Diff}{\mathrm{d}} % 微分 直立体
+\newcommand{\Der}[2]{\dfrac{\mathrm{d}#1}{\mathrm{d}#2}} % 导数
+\newcommand{\EulerE}{\mathrm{e}} % 自然常数 正体
+\newcommand{\ImgI}{\mathrm{i}} % 虚数单位 正体
+\newcommand{\DV}[2]{#1_{\mathrm{#2}}} % 对偶矢量 角标是正体
+\newcommand{\LA}[1]{\boldsymbol{#1}} % 对偶矢量 角标是正体
