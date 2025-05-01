@@ -1,0 +1,103 @@
+\tcbuselibrary{skins,breakable}
+
+% 行内高亮
+\newtcbox{\highlight}[1][MainColor]
+{on line, arc = 0pt, outer arc = 0pt,
+	colback = #1!75!white, colframe = white,
+	boxsep = 0pt, left = 1pt, right = 1pt, top = 2pt, bottom = 2pt,
+	boxrule = 0pt, bottomrule = 1pt, toprule = 1pt}
+	
+% 要点
+\newtcolorbox[auto counter,number within=section]{keypoints}[1][Key Points]{
+	enhanced, breakable,
+	colback=MainColor!20!white,colframe=MainColor!80!black,colbacktitle = MainColor!80!black,
+	attach boxed title to top left = {yshift = -2mm, xshift = 5.5mm},
+	boxed title style = {sharp corners},
+	title={#1~\thetcbcounter：\quad},
+	fonttitle=\bfseries,
+	drop fuzzy shadow,
+}
+
+% 通用框架
+\newtcolorbox{ubox}[2][]
+{enhanced, breakable,
+	colback = white, colframe = MainColor!50!LinkColor,colbacktitle = MainColor!50!LinkColor,
+	attach boxed title to top left = {yshift = -2mm, xshift = 5mm},
+	boxed title style = {sharp corners},
+	fonttitle = \bfseries,
+	title={#2},#1}
+	
+% v1.3 新Box
+% 参考：https://github.com/SeniorMars/dotfiles/blob/main/latex_template/preamble.tex
+% 讲述者
+\newtcolorbox{narrator}[2][]{%
+	enhanced,
+	before skip=2mm, after skip=2mm,
+	colback=StructureColor!5, colframe=StructureColor!75!black,
+	boxrule=0.5mm,
+	attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
+	varwidth boxed title*=-3cm,
+	boxed title style={
+		frame code={
+			\path[fill=StructureColor]
+			([yshift=-1mm,xshift=-1mm]frame.north west)
+			arc[start angle=0,end angle=180,radius=1mm]
+			([yshift=-1mm,xshift=1mm]frame.north east)
+			arc[start angle=180,end angle=0,radius=1mm];
+			\path[
+			left color=StructureColor!70!black,
+			right color=StructureColor!70!black,
+			middle color=StructureColor!80!black
+			]
+			([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+			[rounded corners=1mm] -- ([xshift=1mm,yshift=-1mm]frame.north east)
+			-- (frame.south east) -- (frame.south west)
+			-- ([xshift=-1mm,yshift=-1mm]frame.north west)
+			[sharp corners] -- cycle;
+		},
+		interior engine=empty,
+	},
+	fonttitle=\bfseries,
+	title={#2},
+	#1
+}
+
+% 替换旧的keypoints
+\newtcolorbox[auto counter, number within=section]{uclaim}[1][Claim]{%
+	enhanced,
+	breakable,
+	colback=MainColor!10,
+	colframe=MainColor!85!black,
+	attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+	fonttitle=\bfseries,
+	title={#1~\thetcbcounter：\quad},
+	boxed title size=title,
+	boxed title style={
+		sharp corners,
+		rounded corners=northwest,
+		colback=MainColor!75!black,
+		boxrule=0pt,
+	},
+	underlay boxed title={
+		\path[fill=MainColor!75!black] (title.south west) -- (title.south east)
+		to[out=0, in=180] ([xshift=5mm]title.east) --
+		(title.center-|frame.east)
+		[rounded corners=1mm] |- (frame.north) -| cycle;
+	},
+}
+
+% 通用框架2
+\newtcolorbox{ubox2}[2][]{
+	enhanced,
+	breakable,
+	colback=LinkColor!10,
+	boxrule=0pt, % 已经0了，不用再frame hidden
+	borderline west={2pt}{0pt}{LinkColor},
+	sharp corners,
+	detach title,
+	before upper=\tcbtitle\par\smallskip,
+	coltitle=LinkColor!85!black,
+	fonttitle=\bfseries\sffamily,
+	title={#2},
+	#1
+}
