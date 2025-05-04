@@ -60,3 +60,60 @@
 	\definecolor{EmphColor}{HTML}{000000} 
 	\definecolor{LinkColor}{HTML}{000000}
 }{\relax}
+
+% v1.3新增配色
+% === 红色星空 ===
+\ifdefstring{\Ysy@ycolor}{StarFieldRed}{
+	\definecolor{StructureColor}{HTML}{53181F}  % 勃艮第红
+	\definecolor{MainColor}{HTML}{9d273e}    % 红漆   
+	\definecolor{EmphColor}{HTML}{d12809}  % 科拉松
+	\definecolor{LinkColor}{HTML}{388ef7} % 天澈蓝
+}{\relax}
+
+% === 蓝色星空 ===
+\ifdefstring{\Ysy@ycolor}{StarFieldBlue}{
+	\definecolor{StructureColor}{HTML}{252a50}  % 信标蓝
+	\definecolor{MainColor}{HTML}{3b5b8a}    % 已见蓝   
+	\definecolor{EmphColor}{HTML}{f05627}  % 橙红
+	\definecolor{LinkColor}{HTML}{d01c1f} % 热焰红
+}{\relax}
+
+% === 粉蓝天空 ===
+\ifdefstring{\Ysy@ycolor}{SkyPinkBlue}{
+	\definecolor{StructureColor}{HTML}{555d8b}  % 反射蓝
+	\definecolor{MainColor}{HTML}{766c9b}    % 石斛之花   
+	\definecolor{EmphColor}{HTML}{eca4b8}  % 胭脂扣
+	\definecolor{LinkColor}{HTML}{f7b9c2} % 眉开眼笑
+}{\relax}
+
+% === 绯色天空 ===
+\ifdefstring{\Ysy@ycolor}{SkyScarlet}{
+	\definecolor{StructureColor}{HTML}{d16d7c}  % 沙漠玫瑰
+	\definecolor{MainColor}{HTML}{f7786b}    % 桃红回响
+	\definecolor{EmphColor}{HTML}{f39477}  % 活力亮橙   
+	\definecolor{LinkColor}{HTML}{8c9cc1} % 薰衣草光
+}{\relax}
+
+% === 漫光天空 ===
+\ifdefstring{\Ysy@ycolor}{SkyRelax}{
+	\definecolor{StructureColor}{HTML}{4c55bc}  % 惬意逸蓝
+	\definecolor{MainColor}{HTML}{ad69a2}    % 鹿蛇草   
+	\definecolor{EmphColor}{HTML}{fc8f9b}  % 海螺壳
+	\definecolor{LinkColor}{HTML}{ffbe98} % 绒毛桃子
+}{\relax}
+
+% === Mondrian ===
+\ifdefstring{\Ysy@ycolor}{Mondrian}{
+	\definecolor{StructureColor}{HTML}{0000ff}  % 蓝
+	\definecolor{MainColor}{HTML}{25d4d0}    % 浅蓝   
+	\definecolor{EmphColor}{HTML}{f20d0d}  % 红
+	\definecolor{LinkColor}{HTML}{ffff00} % 黄
+}{\relax}
+
+% === 敦煌 ===
+\ifdefstring{\Ysy@ycolor}{DunHuang}{
+	\definecolor{StructureColor}{HTML}{a64c3b}  % 浅红
+	\definecolor{MainColor}{HTML}{8fbfb0}    % 浅绿  
+	\definecolor{EmphColor}{HTML}{6b3b32}  % 深红
+	\definecolor{LinkColor}{HTML}{b78f68} % 土黄
+}{\relax}

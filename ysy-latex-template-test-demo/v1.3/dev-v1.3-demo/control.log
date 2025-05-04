@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.11.15)  29 APR 2025 11:26
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.11.15)  2 MAY 2025 13:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1437,7 +1437,7 @@ Overfull \hbox (82.68108pt too wide) in paragraph at lines 200--201
 [1
 
 
-]
+] [2]
 
 Package fontspec Info: Could not resolve font "PingFang SC/I" (it probably
 (fontspec)             doesn't exist).
@@ -1459,7 +1459,7 @@ Package fontspec Info: Font family 'PingFangSC(0)' created for font 'PingFang
 (fontspec)             SC/BI/OT:script=hani;language=dflt;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
-) [2] (./contents/ref.tex) [3
+) [3] (./contents/ref.tex) [4
 
 
 
@@ -1469,29 +1469,23 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \hskip 10.53937pt
 (hyperref)                replaced by space on input line 32.
 
-(./contents/appendix.tex [4
+(./contents/appendix.tex [5
 
-]) [5] (./control.aux (./contents/main.aux))
+]) [6] (./control.aux (./contents/main.aux))
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.47188pt have occurred.
 
-
-Package rerunfilecheck Warning: File `control.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `control.out':
-(rerunfilecheck)             Before: 62F46726901443E7D9EE8370000F9BDB;647
-(rerunfilecheck)             After:  00EDB432DB6E30F8940A1D06BB80A847;645.
+Package rerunfilecheck Info: File `control.out' has not changed.
+(rerunfilecheck)             Checksum: 1283DCB477D30FE13D266BA423F8456A;895.
  ) 
 Here is how much of TeX's memory you used:
- 44091 strings out of 476683
- 995350 string characters out of 5804046
+ 44173 strings out of 476683
+ 1001199 string characters out of 5804046
  1878018 words of memory out of 5000000
- 63619 multiletter control sequences out of 15000+600000
+ 63701 multiletter control sequences out of 15000+600000
  522447 words of font info for 109 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  103i,12n,108p,686b,1232s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on control.pdf (5 pages).
+Output written on control.pdf (6 pages).
