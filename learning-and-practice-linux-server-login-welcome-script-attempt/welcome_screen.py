@@ -10,7 +10,7 @@ Dependencies:
 - pyfiglet
 - psutil
 
-Author: Your Name (YSY)
+Author: GitHub-pifuyuini
 """
 
 import datetime
@@ -20,6 +20,8 @@ from rich.console import Console
 from rich.text import Text
 from rich.align import Align
 from pyfiglet import Figlet
+
+myname = 'YSY'
 
 console = Console()
 
@@ -53,11 +55,11 @@ def gradient_text_centered(text, colors):
 
 def print_big_welcome():
     """
-    Print a large stylized ASCII "Welcome, YSY!" banner using pyfiglet,
+    Print a large stylized ASCII "Welcome, [myname]!" banner using pyfiglet,
     with a smooth RGB color gradient and centered alignment.
     """
     fig = Figlet(font='slant')
-    ascii_banner = fig.renderText("Welcome, YSY!")
+    ascii_banner = fig.renderText("Welcome, " + myname + "!")
     gradient_text_centered(ascii_banner, [(255, 139, 77), (90, 255, 204)])
 
 def get_beijing_time():
@@ -106,6 +108,9 @@ def random_quote():
         "✨ 锲而不舍，金石可镂；绳锯木断，水滴石穿。",
         "✨ 仰天大笑出门去，我辈岂是蓬蒿人。",
         "✨ 千磨万击还坚劲，任尔东西南北风。",
+        "恒兀兀以穷年，日乾乾而夕惕。",
+        "多少事，从来急。天地转，光阴迫。一万年太久，只争朝夕！",
+        "庸德之行，庸言之谨；有所不足，不敢不勉；有余，不敢尽。",
         "如果我们选择了最能为人类而工作的职业，那么，重担就不能把我们压倒，因为这是为大家作出的牺牲；那时我们所享受的就不是可怜的、有限的、自私的乐趣，我们的幸福将属于千百万人，我们的事业将悄然无声地存在下去，但是它会永远发挥作用，而面对我们的骨灰，高尚的人们将洒下热泪。",
     ]
     return random.choice(quotes)
