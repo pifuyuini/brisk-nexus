@@ -1,0 +1,119 @@
+% 颜色
+% 介绍混色：% 80% StructureColor + 20% black
+
+% === LiuYin 主题配色 ===
+%\definecolor{StructureColor}{HTML}{97c6c0} % #97c6c0（清茶绿）
+%\definecolor{MainColor}{HTML}{4df8e8} % #4df8e8（死星过载）
+%\definecolor{EmphColor}{HTML}{e26e1b} % #e26e1b（火焰橙）
+%\definecolor{LinkColor}{HTML}{475d7b} % #475d7b（塞纳河畔的春水）
+\ifdefstring{\Ysy@ycolor}{LiuYin}{
+	\definecolor{StructureColor}{HTML}{97c6c0} % #97c6c0（清茶绿）
+	\definecolor{MainColor}{HTML}{4df8e8} % #4df8e8（死星过载）
+	\definecolor{EmphColor}{HTML}{e26e1b} % #e26e1b（火焰橙）
+	\definecolor{LinkColor}{HTML}{475d7b} % #475d7b（塞纳河畔的春水）
+}{\relax}
+
+% === Catppuccin Latte 主题配色 ===
+%\definecolor{StructureColor}{HTML}{7287fd}  % lavender：柔和的薰衣草蓝
+%\definecolor{MainColor}{HTML}{04a5e5}       % sky：清亮的天蓝色
+%\definecolor{EmphColor}{HTML}{d20f39}       % red：深酒红色
+%\definecolor{LinkColor}{HTML}{209fb5}       % sapphire：沉静理性的蓝青色
+\ifdefstring{\Ysy@ycolor}{CatppuccinLatte}{
+	\definecolor{StructureColor}{HTML}{7287fd}  % lavender：柔和的薰衣草蓝
+	\definecolor{MainColor}{HTML}{04a5e5}       % sky：清亮的天蓝色
+	\definecolor{EmphColor}{HTML}{d20f39}       % red：深酒红色
+	\definecolor{LinkColor}{HTML}{209fb5}       % sapphire：沉静理性的蓝青色
+}{\relax}
+
+% === SPA 主题配色 ===
+%\definecolor{StructureColor}{HTML}{2f4679}  % 深蓝灰
+%\definecolor{MainColor}{HTML}{5A6B84}       % 蓝灰高亮色
+%\definecolor{EmphColor}{HTML}{ba324f}       % 酒红强调色
+%\definecolor{LinkColor}{HTML}{544d87}       % 深空紫链接色
+\ifdefstring{\Ysy@ycolor}{SPA}{
+	\definecolor{StructureColor}{HTML}{2f4679}  % 深蓝灰
+	\definecolor{MainColor}{HTML}{5A6B84}       % 蓝灰高亮色
+	\definecolor{EmphColor}{HTML}{ba324f}       % 酒红强调色
+	\definecolor{LinkColor}{HTML}{544d87}       % 深空紫链接色
+}{\relax}
+
+% === ElegantBlue 主题配色（来自ElegantBook） ===
+%\definecolor{StructureColor}{RGB}{60,113,183} % 经典蓝色
+%\definecolor{MainColor}{RGB}{0,166,82} % 活力绿色
+%\definecolor{EmphColor}{RGB}{255,134,24} % 明亮橙色
+%\definecolor{LinkColor}{RGB}{0,174,247} % 亮蓝色
+\ifdefstring{\Ysy@ycolor}{Elegant}{
+	\definecolor{StructureColor}{RGB}{60,113,183} % 经典蓝色
+	\definecolor{MainColor}{RGB}{0,166,82} % 活力绿色
+	\definecolor{EmphColor}{RGB}{255,134,24} % 明亮橙色
+	\definecolor{LinkColor}{RGB}{0,174,247} % 亮蓝色
+}{\relax}
+
+% === 纯黑论文学术配色 ===
+%\definecolor{StructureColor}{HTML}{000000}  
+%\definecolor{MainColor}{HTML}{000000}       
+%\definecolor{EmphColor}{HTML}{000000} 
+%\definecolor{LinkColor}{HTML}{000000}
+\ifdefstring{\Ysy@ycolor}{OhMyPaper}{
+	\definecolor{StructureColor}{HTML}{000000}  
+	\definecolor{MainColor}{HTML}{000000}       
+	\definecolor{EmphColor}{HTML}{000000} 
+	\definecolor{LinkColor}{HTML}{000000}
+}{\relax}
+
+% v1.3新增配色
+% === 红色星空 ===
+\ifdefstring{\Ysy@ycolor}{StarFieldRed}{
+	\definecolor{StructureColor}{HTML}{53181F}  % 勃艮第红
+	\definecolor{MainColor}{HTML}{9d273e}    % 红漆   
+	\definecolor{EmphColor}{HTML}{d12809}  % 科拉松
+	\definecolor{LinkColor}{HTML}{388ef7} % 天澈蓝
+}{\relax}
+
+% === 蓝色星空 ===
+\ifdefstring{\Ysy@ycolor}{StarFieldBlue}{
+	\definecolor{StructureColor}{HTML}{252a50}  % 信标蓝
+	\definecolor{MainColor}{HTML}{3b5b8a}    % 已见蓝   
+	\definecolor{EmphColor}{HTML}{f05627}  % 橙红
+	\definecolor{LinkColor}{HTML}{d01c1f} % 热焰红
+}{\relax}
+
+% === 粉蓝天空 ===
+\ifdefstring{\Ysy@ycolor}{SkyPinkBlue}{
+	\definecolor{StructureColor}{HTML}{555d8b}  % 反射蓝
+	\definecolor{MainColor}{HTML}{766c9b}    % 石斛之花   
+	\definecolor{EmphColor}{HTML}{eca4b8}  % 胭脂扣
+	\definecolor{LinkColor}{HTML}{f7b9c2} % 眉开眼笑
+}{\relax}
+
+% === 绯色天空 ===
+\ifdefstring{\Ysy@ycolor}{SkyScarlet}{
+	\definecolor{StructureColor}{HTML}{d16d7c}  % 沙漠玫瑰
+	\definecolor{MainColor}{HTML}{f7786b}    % 桃红回响
+	\definecolor{EmphColor}{HTML}{f39477}  % 活力亮橙   
+	\definecolor{LinkColor}{HTML}{8c9cc1} % 薰衣草光
+}{\relax}
+
+% === 漫光天空 ===
+\ifdefstring{\Ysy@ycolor}{SkyRelax}{
+	\definecolor{StructureColor}{HTML}{4c55bc}  % 惬意逸蓝
+	\definecolor{MainColor}{HTML}{ad69a2}    % 鹿蛇草   
+	\definecolor{EmphColor}{HTML}{fc8f9b}  % 海螺壳
+	\definecolor{LinkColor}{HTML}{ffbe98} % 绒毛桃子
+}{\relax}
+
+% === Mondrian ===
+\ifdefstring{\Ysy@ycolor}{Mondrian}{
+	\definecolor{StructureColor}{HTML}{0000ff}  % 蓝
+	\definecolor{MainColor}{HTML}{25d4d0}    % 浅蓝   
+	\definecolor{EmphColor}{HTML}{f20d0d}  % 红
+	\definecolor{LinkColor}{HTML}{ffff00} % 黄
+}{\relax}
+
+% === 敦煌 ===
+\ifdefstring{\Ysy@ycolor}{DunHuang}{
+	\definecolor{StructureColor}{HTML}{a64c3b}  % 浅红
+	\definecolor{MainColor}{HTML}{8fbfb0}    % 浅绿  
+	\definecolor{EmphColor}{HTML}{6b3b32}  % 深红
+	\definecolor{LinkColor}{HTML}{b78f68} % 土黄
+}{\relax}

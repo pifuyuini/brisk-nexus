@@ -1,0 +1,49 @@
+\subsection{零部件规格}
+
+零部件规格如\cref{tab:a1}所示。
+
+\begin{table}[h!]
+	\centering
+	\caption{零部件规格记录表}
+	\label{tab:a1}
+	\begin{tabular}{ccc}
+		\hline
+		零部件 & 规格 & 数值 \\
+		光源 & 稳频氦氖激光器 & 632.8 nm \\ 
+		准直透镜 & 消色差双胶合透镜 & f = 250 mm, Ø = 50 mm \\ 
+		分光镜 & 薄膜 & 50/50 透射/反射比 \\ 
+		聚焦透镜 & 消色差双胶合透镜 & f = 250 mm, Ø = 50 mm \\ 
+		探测反射镜 & 高反射率 & Ø ≈ 5 mm \\ 
+		枢轴 & 低摩擦 & - \\ 
+		光学编码器 & 增量式，正交输出 & 100,000 PPR \\ 
+		编码器精度 & 优于 3 角秒 & - \\ 
+		编码器 LED 波长 & 红外 (典型值 850 nm) & - \\ 
+		编码器码盘 & 高质量玻璃 & - \\ 
+		信号处理单元 & 高性能微控制器 & - \\ 
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{误差分配}
+
+误差预算如\cref{tab:b1}所示。
+
+\begin{table}[h!]
+	\centering
+	\caption{系统误差项及控制措施预算表}
+	\label{tab:b1}
+	\resizebox{\textwidth}{!}{
+	\begin{tabularx}{\textwidth}{ccc}
+		\hline
+		\textbf{误差项} & \textbf{预算值 (arcsec)} & \textbf{控制措施} \\
+		光学像差 & 0.10 & 选用 $\lambda/10$ 表面质量消色差透镜；优化透镜组配合与装配松量补偿 \\
+		编码器固有精度 & 0.50 & 采用 ±3″ 精度、100\,000 PPR 编码器；实施脉冲插值与温度补偿 \\
+		机械对准误差 & 0.20 & 高精度 kinematic 安装座；激光对准与自检标定标尺 \\
+		振动引起抖动 & 0.10 & 被测平台隔振支撑；关键元件阻尼材料；动态信号低通滤波 \\
+		热致漂移 & 0.10 & 温控实验室或恒温箱；在线温度监测与数字补偿 \\
+		机械联动非线性与齿隙 & 0.10 & 精密滚珠/空气轴承；无背隙联轴器；装配预载与柔性补偿 \\
+		\textbf{合计（RSS）} & \textbf{0.59} & \\
+		\hline
+	\end{tabularx}
+}
+\end{table}
