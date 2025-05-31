@@ -1,0 +1,30 @@
+% 主控文件
+
+% 加载类
+%!TEX program = xelatex
+\documentclass[ycolor=OhMyPaper,chinese=true,type=paper]{ysy-latex/YsyClass}
+
+% 个人信息
+\renewcommand{\TitleName}{Somtə kalkal kəndaaram cidibe duno helium atombedə dawari perturbationben baditin.}
+\renewcommand{\AuthorName}{作者1\textsuperscript{1}, 作者2\textsuperscript{2}, 作者3\textsuperscript{1}}
+\renewcommand{\Address}{\textsuperscript{1}~地址1}
+\renewcommand{\AddInfo}{我是一只猫，快乐的星猫！}
+\renewcommand{\Abstract}{Dán dutkanprošeavttas mii systemáhtalaččat guorahalle iešguđetlágan vugiid movt dárkilit rehkenastit heliuma vuođđodili energiija, geavahit perturbašuvdnavuogádaga, variašuvdnavuogádaga ja Hylleraas-vuogádaga. Vuosttažettiin, perturbašuvdnavuogádaga nolla- ja vuosttaš-ortnega lahkonanvugiid bokte, mii rehkenastit heliumatoma vuođđodili energiija, ja boađus lea lahka geahččalanárvvu. Dan maŋŋá geavahuvvui variašuvdnavuohki válljet heivvolaš geahččalanbuolvva funkšuvnna, mii viidáseappot buoridii rehkenastinnávccaid ja válddii vuhtii elektrovnnaid čielggadanváikkuhusa váikkuhusaid bohtosiidda. Loahpas geavahuvvo Hylleraas-vuohki olahit dárkilis rehkenastima Mathematica:s go bidjá sisa ellipsoidalaš koordináhtaid ja máŋggalágan variašuvdnaparamehteriid. Dasa lassin geahččaledje bidjat nevrala vuorkkáid Hylleraas-vuogádahkii, ja energiija sullii rehkenastin olahuvvui go heivehuvvui stuorra lohku heivehahtti paramehteriin. Vaikko nevrala vuorkká bohtosat eai leat vuos olahan vuorddekeahtes dárkilisvuođa, de das lea stuorra potensiála ja addá ođđa jurdagiid boahttevaš dutkamii. Dán dutkanprošeavtta bokte mii eat dušše duođaštan dáid vuogádagaid ávkkálašvuođa, muhto maiddái čoaggán árvvolaš dutkanvásáhusaid ja oaiviliid.}
+% 拓展
+\input{ysy-latex/extension/YsyPaper} 
+
+% 主控部分
+\begin{document}        
+	% 封面
+        \YsyCoverPage
+        % 目录
+        \tableofcontents
+        % 主要内容
+        \include{contents/main}
+        % 参考文献
+        \clearpage
+\YsyReferencesPage{\input{contents/ref}}
+        % 附录
+        \clearpage
+\YsyAppendixPage{\input{contents/appendix}}
+\end{document}

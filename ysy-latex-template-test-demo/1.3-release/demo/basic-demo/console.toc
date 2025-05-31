@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}YsyClass样式特色}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}颜色盒子}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}其它效果}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}关于规范排版}{3}{section.2}%
+\contentsline {section}{\numberline {3}关于SI包siunitx}{3}{section.3}%
+\contentsline {section}{\numberline {4}Tikz功能测试}{4}{section.4}%
+\contentsline {section}{参考文献}{5}{section.4}%
+\contentsline {section}{附\hskip 1em\relax 录}{6}{Item.11}%
+\contentsline {subsection}{\numberline {A}公式表}{6}{subsection.4.1}%

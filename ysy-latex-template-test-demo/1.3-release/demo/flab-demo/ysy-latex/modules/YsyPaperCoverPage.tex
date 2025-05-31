@@ -1,0 +1,23 @@
+% ===== 封面页生成命令 =====
+\NewDocumentCommand{\YsyCoverPage}{}{
+	\begin{center}
+		{\Huge\bfseries \TitleName\par}
+		\vskip 1.5em
+		
+		{\large \AuthorName\par}
+		\vskip 1em
+		
+		{\itshape \Address\par}
+		\vskip 1em
+		
+		{\today\par}
+		\vskip 2em
+		
+		\begin{minipage}{0.85\textwidth}
+			\noindent\textbf{\YsyAbstractName:}~\Abstract
+		\end{minipage}
+		\vskip 2em
+		\hrule
+		\vskip 1em
+	\end{center}
+}

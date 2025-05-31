@@ -1,0 +1,43 @@
+% 主控文件
+
+% 加载类
+%!TEX program = xelatex
+\documentclass[ycolor=Elegant,chinese=true,type=flab]{ysy-latex/YsyClass}
+
+% 个人信息
+\renewcommand{\TitleName}{BD1 \quad 复摆与混沌}
+\renewcommand{\AuthorName}{牛马}
+\renewcommand{\Grade}{4040级}
+\renewcommand{\LabTime}{2035年15月37日}
+\renewcommand{\SchoolNumber}{20351537}
+% 拓展
+\input{ysy-latex/extension/FundamentalLab} 
+
+% 主控部分
+\begin{document}        
+	% 封面
+        \YsyCoverPage{
+        	
+        	\textbf{【实验安全注意事项】}	
+        	\begin{enumerate}
+        		\item 硬件连接检查：开启电脑，点击“开始”，找到 NI MAX 并启动，在“设备和接口”下查看电脑给 myDAQ 分配的名称是否为“myDAQ1”。如果出现下图左边的情况，请右键点击“myDAQ1”并把它删除，然后把“myDAQ2”的名称修改为“myDAQ1”并保存。（注：这是因为程序编写时使用的设备名称为“myDAQ1”）
+        		\item 角度零点校正：转动电机指向 0°位置，双击桌面的“玻尔机械混沌摆”启动程序后，软件会实时显示摆轮角度， 用手拨动摆轮，使白色箭头从负 140°至正 140°摆动一次，然后使箭头对准 0°。此时观察软件实时显示的摆轮角度是否正确。如不正确，需在“零点校正”中输入符号相反的数值，之后再次转动摆轮检查角度显示是否正确。
+        		（注：每次启动程序，都需要进行角度校正。如果在程序运行过程中，中途点击过“角度采集”按钮，“零度校正”一般不需要重新设置，只需手动让摆轮从左到右大幅摆动一次，角度显示即可恢复正常。）
+        		\item 安装重物后，转动电机指向 0°位置，调节重物离转轴的距离，使摆轮偏转后稳定在 35～50°之间。
+        		\item 用于电机供电的电源，电压设置为 15V；点击“电机开关”，电机才会启动；点击“设置频率”，电机频率才会更新。（注：用于电机供电的电源打开时，转动电机时的阻力会增大）
+        		\item 数据保存：软件保存的数据都是保存时刻前 240 秒的数据。软件在“保存间隔”和“稳定时间”均会自动保存一次数据，可以根据“已用时间”和文件名进行区分（也可以设置“保存间隔”和“稳定时间”相等，这样软件在达到“稳定时间”时保留一次数据）。点击“保存数据”，软件会即刻保存数据一次。
+        		
+        	\end{enumerate}
+        }
+        % 目录
+        \clearpage
+        \tableofcontents
+        % 主要内容
+        \include{contents/main}
+        % 参考文献
+        \clearpage
+\YsyReferencesPage{\input{contents/ref}}
+        % 附录
+        \clearpage
+\YsyAppendixPage{\input{contents/appendix}}
+\end{document}

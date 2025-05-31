@@ -1,0 +1,22 @@
+\contentsline {section}{\numberline {1}引言}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}关于这一项目的文献调研结果}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}我们研究这一项目的思路}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}总结我们得到的一些结果}{5}{subsection.1.3}%
+\contentsline {section}{\numberline {2}基于微扰法计算氦原子基态能量}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}微扰法的形式理论}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}能量的零阶}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}能量的一阶}{9}{subsection.2.3}%
+\contentsline {section}{\numberline {3}基于变分法计算氦原子基态能量}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}变分法的核心原理}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}基于微扰法的试探波函数}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}基于电子云的屏蔽效应的试探波函数}{10}{subsection.3.3}%
+\contentsline {section}{\numberline {4}基于Hylleraas方法计算氦原子基态能量}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Hylleraas方法}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}根据相关参考文献中的思路编程实现氦原子基态能量的具体计算}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}基于神经网络的Hylleraas方法实现}{15}{subsection.4.3}%
+\contentsline {section}{\numberline {5}总结与致谢}{17}{section.5}%
+\contentsline {subsection}{\numberline {5.1}结论、心得与体会}{17}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}致谢}{18}{subsection.5.2}%
+\contentsline {section}{参考文献}{19}{subsection.5.2}%
+\contentsline {section}{附\hskip 1em\relax 录}{20}{Item.13}%
+\contentsline {subsection}{\numberline {A}公式表}{20}{subsection.5.1}%

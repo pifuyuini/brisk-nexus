@@ -1,0 +1,30 @@
+% 主控文件
+
+% 加载类
+%!TEX program = xelatex
+\documentclass[ycolor=DunHuang,chinese=true,type=universal]{ysy-latex/YsyClass}
+
+% 个人信息
+\renewcommand{\TitleName}{近代物理实验II实验报告}
+\renewcommand{\AuthorName}{作者1，作者2，其它作者}
+\renewcommand{\Address}{中国珠海市大学路 2 号中山大学物理与天文学院}
+\renewcommand{\Preface}{\kaishu 实验报告高能回，流萤厨献给流萤的真挚情书！}
+\renewcommand{\CoverIllustration}{cover_img}
+% 拓展
+\input{ysy-latex/extension/YsyLab} 
+
+% 主控部分
+\begin{document}        
+	% 封面
+        \YsyCoverPage
+        % 目录
+        \tableofcontents
+        % 主要内容
+        \include{contents/main}
+        % 参考文献
+        \clearpage
+\YsyReferencesPage{\input{contents/ref}}
+        % 附录
+        \clearpage
+\YsyAppendixPage{\input{contents/appendix}}
+\end{document}

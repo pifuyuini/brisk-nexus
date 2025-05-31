@@ -1,0 +1,608 @@
+% !TEX root = ../console.tex
+
+%--------------------------------------------------------------------
+% 第一部分
+\section{引言}
+\subsection{关于这一项目的文献调研结果}
+由于我们在做这个项目之前几乎没有量子力学的基础，更别说对微扰法等有什么了解了，因此我们首先对这个研究项目进行了相关调研。据我们了解，最初，波尔模型被用来尝试计算氦原子的能量，但这种方法未能提供准确结果。这主要是因为波尔模型不能很好地处理多电子系统。量子力学的发展引入了更精确的方法，如变分法，这成为了解决多电子问题的标准方法。在变分法中，通过选择适当的试探波函数并优化参数来最小化系统的能量期望值。对于稍微偏离已知系统的情况，摄动理论被用来计算能量的校正。这包括第一阶和更高阶的能量校正，虽然这种方法在精度上有限制，但对于包括电子屏蔽效应的微调很有用 。进一步的研究引入了如蒙特卡洛方法和定态微扰方法等更高级的数值方法，这些方法能够以非常高的精度计算基态能量，尤其是在考虑电子间相互作用和相对论效应时。在当前常用的方法中，变分法仍然是最常用的技术之一，因为它在操作上相对简单且能够提供非常接近实验值的结果。此外，随着计算技术的发展，基于量子计算的变分量子本征求解器（VQE）也开始用于解决此类问题，尽管这主要还是在理论和实验研究阶段。目前最精确的方法之一是使用基于变分法的高阶波函数，通过精细调整包括电子间距离在内的参数，以及考虑相对论和量子电动力学效应，这些方法能够非常接近实验观测到的氦原子基态能量。
+
+除以上在外，这个问题事实上更是一个量子化学的问题，量子化学家们开发了许多专门用于计算的方法和软件，如Gaussian、GAMESS、MOLPRO等。这些软件可以进行高级的量子化学计算，包括Hartree-Fock方法、配置相互作用（CI）或密度泛函理论（DFT）；特别是这些方法可以自动处理电子间的相互作用和波函数的对称性问题。
+\begin{itemize}
+	\item Hartree-Fock 方法
+	
+	这是一种基于单粒子波函数的自洽场方法。在Hartree-Fock方法中，电子间的多体效应通过电子云的平均场来描述。氦原子的Hartree-Fock计算涉及找到最佳的单电子轨道，使得总能量最小。这通常通过解决一组Fock方程实现，这些方程是通过变分原理获得的，目标是优化轨道波函数以最小化系统能量。
+	
+	\item 配置相互作用 (Configuration Interaction, CI)
+	
+	配置相互作用方法是一种更精确的量子化学方法，它通过考虑多个电子配置（即电子分布在不同轨道上的所有可能方式）来提高解的精度。CI方法在描述电子相关性（电子间非独立运动的效应）方面特别有效。对于氦原子，CI方法会计算基态和激发态的能量，并通过线性组合基态和激发态的波函数来最小化总能量。
+	
+	\item 密度泛函理论 (Density Functional Theory, DFT)
+	
+	DFT是一种用于分子和凝聚态系统的电子结构计算方法。它通过密度泛函来描述电子间的相互作用，不直接使用多电子波函数。对于某些类型的系统，DFT提供了一个高效且准确的计算方案。尽管DFT在处理小分子（如氦原子）时可能不如CI或量子Monte Carlo方法精确，但它在处理大系统时非常有效。
+	
+	\item 量子Monte-Carlo (Quantum Monte-Carlo, QMC)
+	
+	量子Monte-Carlo方法通过使用随机抽样技术来解决量子多体问题，为电子间相互作用提供了非常精确的数值解。QMC通常用于计算基态和低激发态的能量，尤其是在其他方法难以处理的强相关系统中。
+\end{itemize}
+
+事实上，在最初的调查当中，我们对Hartree-Fock 方法非常感兴趣，想要基于此做一些更深入的研究，但是随着我们对老师提供的两篇文献（\cref{ref:pekeris1959}和\cref{ref:knight1962}）的阅读，我们逐渐找到了另外的更合理的\textbf{研究思路}，详见下一节。
+
+本节的最后将介绍这两篇文献的主要内容，为接下来的展开铺垫一些必要的背景。根据文献\cref{ref:liu2004}，1958 年，Pekeris 在 Hylleraas 工作的基础上提出了一个精确的有关联的变分波函数得到了精度很高的库仑三体问题的系统基态能量。1966 年，Frankowski 和 Pekeris 在变分波函数中加入对数因子进一步修改了变分函数；之后，Freund 等人又对上述变分函数做了改进，发现引入对数因子对二电子原子体系的能量有实质性的改进。后来，Drake 和 Yan 用推广的 Hylleraas 波函数形式，构造了双基组波函数并对氦原子的能量进行了计算，三体体系的能量又有了很大改进。但在四体问题计算时出现了困难，因为提高其精度需要的波函数项数太多。Korobov在此基础上引入了复指数，得到了精度非常高的氢原子能量。
+
+两篇文献\cref{ref:pekeris1959}和\cref{ref:knight1962}正是上述工作的一部分和延续。
+
+其中，\cref{ref:pekeris1959}旨在通过改进的波动方程求解方法，精确计算氦原子的1S和2S态的能量，以达到$0.001 cm^{-1}$的非相对论能量值精度。作者通过求解阶数为252、444、715和1078的行列式，获得了1S态的能量值为$-2.903724375\text{原子单位}(a.u.)$，误差估计在最后一位数字的1个量级。经过质量极化和相对论修正后，得到了氦原子的电离能量为$198312.0258 cm^{-1}$，考虑到Lamb移位修正，理论电离能量为$198310.687 cm^{-1}$，与实验值$198310.82\pm0.15 cm^{-1}$非常接近。对2S态，求解阶数为125、252、444和715的行列式，最终能量值为$-2.17522937822 a.u.$，误差估计在最后一位数字的1个量级。经过相同的修正后，得到了非相对论电离能量为$38454.8273 cm^{-1}$，考虑到Lamb移位修正后，理论电离能量为$38454.66 cm^{-1}$，与实验值$38454.73\pm0.05 cm^{-1}$相符。这篇论文的方法基于使用周长坐标系，并通过求解大规模行列式，提高了计算精度。对于1S态和2S态，行列式的阶数分别达到了1078和715。作者指出，进一步提高计算精度需要增加行列式的阶数，并期待实验测量能进一步减小电离能量的不确定性。此外，作者提出可以通过计算高阶行列式来改进波函数，从而获得更准确的理论值。通过这篇论文，作者成功地展示了在高精度计算氦原子能量方面的显著进展，并为进一步的理论和实验研究奠定了基础。
+
+而对于\cref{ref:knight1962}，它应用了Hylleraas提出的变分微扰方法，扩展了70项基函数集，用以近似两电子原子系统的一阶波函数。其研究的目的是计算二阶和三阶微扰能量系数，以及一些操作符的一阶期望值，并与已知值进行比较。计算得到了二阶微扰能量系数的上限为$-0.15766625 a.u.$，并估计该值在小数点后第七位上已收敛。作者计算得到了三阶微扰能量系数为$0.00869868 a.u.$，并且通过不同的基函数集，计算了一些操作符（如\(\delta(r_1)\)、\(r_1^{-2}\)、\(r_1\)、\(\cos\theta_{12}\)等）的期望值，并与已知值进行了比较。除此以外，作者研究了包含负幂的基函数集（“Kinoshita”型）和只包含正幂的基函数集（“Hylleraas”型）的表现。文章使用了三种基本不同的基函数集：包含70项的Kinoshita型基函数集、包含70项的Hylleraas型基函数集，以及基于这些类型的其他70项基函数集。方法上，采用变分微扰方法，对一阶波函数进行了近似，并使用这些波函数计算了一些操作符的期望值；进一步，比较了不同基函数集在计算期望值和能量系数时的表现，发现Kinoshita型基函数集表现更好。论文提出了一个使用一阶和高阶期望值分析和表征近似波函数的方法，也讨论了如何使用这些期望值来研究近似波函数在其配置空间中的表现，并提出了一种非能量变分方法来确定波函数，最后提出了在未来研究中进一步扩展基函数集，并应用于双电子原子的激发单重态和三重态。总的来说，这篇论文展示了通过改进变分微扰方法，在高精度计算双电子原子系统的能量和期望值方面的显著进展，并为进一步的理论和实验研究奠定了基础。
+
+\subsection{我们研究这一项目的思路}
+
+正如本文标题就已经点出的那样，在进行这个项目时，我们首先在零基础的情况下接触了微扰法、变分法以及HF方法等方法。接下来，我们按照我们项目的题目，也就是“微扰法”进行了最简单学习，从头开始接触量子力学并一直学到了微扰法的形式理论，我们采用的教材主要是\cref{ref:griffiths}；在此基础上，我们着手进行了具体的计算，相关内容将在在第二章中谈到。然而，我们并不满足于能量一阶修正的结果，然后我们在计算能量的二阶修正时遇到了困难。这使得我们进一步深入阅读了两篇文献\cref{ref:pekeris1959}和\cref{ref:knight1962}，找到了我们接下来研究的关键，也就是Hylleraas方法（\cref{ref:hylleraas1929}）。Hylleraas方法离不开变分法这一基础，因此我们又进行了变分法的学习，并且尝试完成了了\cref{ref:griffiths}上的一些计算结果。于是，我们顺利向着Hylleraas方法稳步推进，调研了文献\cref{ref:chen2004}，并基于此完成了Mathematica编程，得到了一个非常精确的结果。最后，我们受变分原理的启发，原创性地提出了一种基于神经网络实现的Hylleraas方法的构想，并作了简单的编程尝试取得了不错的结果。
+
+在我们看来，在完成这一项目时我们逐步探索出上述研究思路，着实为我们提供了不错的本科生早期科研训练，我们也在其中得到了不小的收获。
+
+\textbf{由于我们在完成这个项目的过程中依赖于众多参考文献，虽然本文也有一些原创的部分，但是这绝对不足以称为一篇论文，因此我们更愿意称本文为本课程研究项目的报告，而这也契合老师于课堂上提出的要求。}
+
+\subsection{总结我们得到的一些结果}
+在我们的研究过程中，通过应用微扰法、变分法和Hylleraas方法，我们取得了一系列关于氦原子基态能量的精确计算结果。这些结果不仅验证了理论方法的有效性，也为进一步的高精度计算提供了基础。
+
+首先，在基于微扰法的计算中，我们通过将氦原子的Hamilton量分解为零阶Hamilton量和微扰项，成功地计算出了氦原子的零阶能量和一阶能量修正。具体来说，零阶能量为$-108.8 eV$，一阶能量修正为$34 eV$，从而得到了一阶近似下的基态能量为$-74.8 eV$。这一结果与实验值接近，证明了微扰法在处理多电子体系时的有效性。
+
+其次，我们利用变分法进一步提高了计算精度。通过选择合适的试探波函数，我们得到了更为精确的基态能量估计。基于微扰法的试探波函数，我们计算出的能量结果与微扰法一致。而基于电子云屏蔽效应的试探波函数，则将基态能量估计值进一步改进为$-77.5 eV$。这表明，考虑电子屏蔽效应可以显著提高变分法的计算精度。
+
+最后，我们采用了Hylleraas方法，通过引入椭球坐标和多个变分参数，进一步提高了计算的准确性。利用Mathematica编程实现了具体计算，得到的基态能量为$-79.0102 eV$，与实验值非常接近。此外，我们还提出并实现了基于神经网络的Hylleraas方法，通过构建一个包含大量可调参数的神经网络模型，并利用变分原理进行训练，得到了约为$-81.225 eV$的基态能量。尽管该方法的精度尚未完全达到预期，但其潜力巨大，为未来研究提供了新的思路。
+
+综上所述，通过应用微扰法、变分法和Hylleraas方法，我们不仅成功地计算出了氦原子的基态能量，还验证了这些方法在多电子体系研究中的有效性和适用性。
+
+
+%--------------------------------------------------------------------
+% 第二部分
+\section{基于微扰法计算氦原子基态能量}
+氦原子作为最简单的多电子原子系统，是研究原子结构和相互作用的重要模型。其基态能量的计算不仅对理解氦原子的物理性质至关重要，而且为更复杂的多电子体系的研究提供了宝贵的经验。由于氦原子中存在电子-电子间的相互作用，其Hamilton量不能像氢原子那样被简单解析求解。因此，必须引入近似方法来处理这一问题。
+
+微扰法作为一种有效的近似方法，在量子力学中广泛应用于处理多体问题。通过将复杂的Hamilton量分解为一个可以精确求解的零阶Hamilton量和一个作为微扰项的相互作用部分，我们可以通过迭代的方法逐步逼近系统的真实能量。在这一章中，我们将详细介绍如何利用微扰法计算氦原子的基态能量，具体分为以下几部分内容：首先介绍微扰理论的基本概念和数学形式，详细说明如何将复杂的多体问题分解为易于处理的零阶问题和微扰项；接着讨论在忽略电子-电子相互作用时，氦原子的零阶能量计算。我们将分析零阶近似的合理性，并给出相应的数学表达式；最后在考虑电子-电子相互作用作为微扰的情况下，计算氦原子的基态能量的一阶修正。我们将通过详细推导展示一阶能量修正的计算过程，并讨论其对总能量的影响。
+
+通过对氦原子基态能量的微扰法计算，不仅可以加深我们对微扰理论的理解，还可以为进一步的高精度计算奠定基础，为后续研究更复杂的原子和分子体系提供重要的理论支持。当然，需要强调的是，这里我们谈到的微扰都是定态微扰，更进一步，都是非简并的。
+
+\subsection{微扰法的形式理论}
+微扰法的形式理论在许多教材中都有详细讲解（详见\cref{ref:griffiths}），具体的理论推导及严谨的论证可以直接参见相关教材，并且形式理论的推导并不是本文的重点，因此本节内容主要由我们小组学习时笔记整理而来，只涵盖一些重要内容。
+
+待研究的体系Hamilton算子$H$可以写为$H=H_0+W$，其中，$H_0$是已知的且已经求解出的又与时间无关的的算子，我们将它理解为未微扰的Hamilton算子，相应的$W$被称为微扰，定态微扰对应着$W$与时间无关，非简并微扰则要求无微扰的算子的不同的态不能有相同的能量（如果有相同的能量下面的公式就不成立，需要用简并微扰理论）。
+
+\textbf{下面我们对非简并微扰法的形式理论进行介绍}
+
+首先，系统的定态薛定谔方程为：
+\begin{equation}
+	H\psi = E\psi
+	\label{eq:SchE}
+\end{equation}
+我们可以把系统的Hamilton算子表示成如下形式（$\lambda$是一个后续比较修正级数的指标，其值为1）：
+\begin{equation}
+	H = H_0 +\lambda W
+	\label{eq:split}
+\end{equation}
+
+形式上将\cref{eq:SchE}的解记为$\psi_n$，其对应能级的能量为$E_n$，
+我们可以对$\psi_n$与$E_n$以$\lambda$为参数做小量展开，得
+
+\begin{equation}
+	\left\{\begin{matrix}
+		\psi_n = \psi_n^0 +\lambda \psi_n^1 +\lambda^2 \psi_n^2 +\cdots & \\
+		E_n = E_n^0 +\lambda E_n^1 +\lambda^2 E_n^2 +\cdots  
+	\end{matrix}\right.
+	\label{eq:E_n_psi_n}
+\end{equation}
+
+其中，$\psi _n^0$为无微扰的Hamilton算子$H_0$的第n个本征函数，$E_n^0$ 为无微扰的波函数对应的本征值；$\psi _n^1$为第n个本征函数的一级修正，$E_n^1$ 为第n个本征值的一级修正，以此类推。
+
+将\cref{eq:split}、\cref{eq:E_n_psi_n}带入\cref{eq:SchE}中有
+$$
+(H_0 + \lambda W)
+[ \psi_n^0 +\lambda \psi_n^1 +\lambda^2 \psi_n^2 +\cdots ]
+=
+( E_n^0 +\lambda E_n^1 +\lambda^2 E_n^2 +\cdots )
+[\psi_n^0 +\lambda \psi_n^1 +\lambda^2 \psi_n^2 +\cdots]
+$$
+按$\lambda$幂次进行合并，有
+
+\begin{align}
+	& H_0 \psi_n^0 
+	+\lambda (H_0 \psi_n^1 + W \psi_n^0)
+	+ \lambda^2 (H_0 \psi_n^2 + W \psi_n^1) + \cdots \nonumber \\
+	&= E_n^0 \psi_n^0 
+	+ \lambda (E_n^0 \psi_n^1 + E_n^1 \psi_n^0)
+	+ \lambda^2 (E_n^0 \psi_n^2 + E_n^1 \psi_n^2 + E_n^2 \psi_n^0) + \cdots
+	\label{eq:lambda_n}
+\end{align}
+
+在\cref{eq:lambda_n}中比较同幂级数可得，对于零级项($\lambda ^0$)，有$H_0 \psi _n^0 =E_n^0 \psi_n^0$，即为无微扰下的薛定谔方程。
+
+\textbf{下面我们考虑一级能量修正的公式计算。}
+
+考虑\cref{eq:lambda_n}中的一级项($\lambda ^1$)有
+\begin{equation}
+	H_0 \psi_n^1 +W \psi_n^0 = E_n^0 \psi_n^1 +E_n^1 \psi_n^0
+	\label{eq:lambda1}
+\end{equation}
+
+我们可以使用$\psi_n^0$与\cref{eq:lambda1}进行内积运算
+$$
+\left \langle \psi_n^0 | H_0 \psi_n^1 \right \rangle
++\left \langle \psi_n^0 | W \psi_n^0 \right \rangle  
+=
+E_n^0 \left \langle \psi_n^0 | \psi_n^1 \right \rangle 
++E_n^1 \left \langle \psi_n^0 | \psi_n^0 \right \rangle 
+$$
+因为$H$是Hermite算子，有
+$$
+\left \langle \psi_n^0 | H_0 \psi_n^1 \right \rangle
+=\left \langle  H_0 \psi_n^0 | \psi_n^1 \right \rangle
+=\left \langle  E^0_n \psi_n^0 | \psi_n^1 \right \rangle
+=E^0_n \left \langle   \psi_n^0 | \psi_n^1 \right \rangle
+$$
+所以最后得到：
+
+\begin{equation}
+	E_n^1 = \left \langle \psi_n^0 | W | \psi_n^0  \right \rangle
+	\label{eq:E1}
+\end{equation}
+
+\cref{eq:E1}说明，能量的一级修正就是微扰项在无微扰态中的期望值。
+
+\textbf{下面我们考虑二级能量修正的公式推导}
+
+对于二级项($\lambda ^2$)有
+
+\begin{equation}
+	H_0 \psi _n^2 +W \psi_n^1 = E_n^0 \psi_n^2 +E_n^1 \psi_n^1+E_n^2 \psi_n^0
+	\label{eq:lambda2}
+\end{equation}
+
+同理，将
+$\psi _n^0$ 与\cref{eq:lambda2}做内积可以得到
+$$
+\left \langle  \psi_n^0 | H_0 \psi_n^2 \right \rangle 
++\left \langle  \psi_n^0 | W \psi_n^1 \right \rangle 
+=E_n^0 \left \langle  \psi_n^0 |  \psi_n^2 \right \rangle 
++ E_n^1 \left \langle  \psi_n^0 | \psi_n^1 \right \rangle 
++ E_n^2 \left \langle  \psi_n^0 |  \psi_n^0 \right \rangle 
+$$
+再次利用Hamilton算子的Hermite性：
+$$
+\left \langle  \psi_n^0 | H_0 \psi_n^2 \right \rangle
+= \left \langle  H_0  \psi_n^0 |\psi_n^2 \right \rangle
+=  E_n^0 \left \langle    \psi_n^0 |\psi_n^2 \right \rangle
+$$
+最后可以得到一个关于$E_n^2$的方程：
+
+\begin{equation}
+	E_n^2 = \left \langle \psi_n^0 | W | \psi_n^1 \right \rangle  - E_n^1 \left \langle  \psi_n^0|\psi_n^1 \right \rangle 
+	\label{eq:E2}
+\end{equation}
+
+注意到在\cref{eq:E2}中出现了$\psi_n^1$，即波函数的一级修正，所以我们下面先讨论关于波函数一级修正的计算。
+
+由一级项\cref{eq:lambda1}，可得
+$$
+(H_0 -E_n^0)\psi_n^1 = -(W - E_n^1) \psi_n^0
+$$
+右式是已知函数，则该方程是关于$\psi_n^1$的非齐次微分方程。因为$\psi_n^0$是完备的，意味着我们可以将$\psi_n^0$作为一组基底，将$\psi_n^1$表示为基底的线性组合：
+
+\begin{equation}
+	\psi_n^1 = \sum_{m\ne n} c_m^{(n)} \psi_m^0
+	\label{eq:psi1_linear}
+\end{equation}
+
+把\cref{eq:psi1_linear}带入一级项\cref{eq:lambda1}中，并利用$\psi_m^0$满足无微扰薛定谔方程的事实，可以得到
+$$
+\sum_{m\ne n} (E_m^0 -E_n^0)c_m^{(n)} \psi_m^0
+=
+-(W- E_n^1)\psi_n^0
+$$
+取$\psi_l^0$与上式的内积
+$$
+\sum_{m \ne n} (E_m^0 -E_n^0)c_m^{(n)} 
+\left \langle  \psi_l^0 |\psi_m ^0 \right \rangle 
+=
+-\left \langle \psi _l^0 |W| \psi_n^0 \right \rangle 
++E_n^1
+\left \langle \psi _l^0 | \psi_n^0  \right \rangle 
+$$
+
+如果$l=n$，左式为零，我们可以得到与\cref{eq:E1}同样的结果。
+
+% $$
+% E_n^1
+% =\left \langle \psi_n^0 | W | \psi_n^0  \right \rangle ；
+% $$
+
+如果$l\ne n$,我们可以得到
+
+$$
+(E_l^0- E_n^0) c_l^{(n)}
+=-\left \langle \psi_n^0 | W | \psi_n^0  \right \rangle
+$$
+
+$$
+\Rightarrow
+c_m^{(n)}
+=\frac{\left \langle \psi_m^0 | W | \psi_n^0  \right \rangle}{E_n^0 -E_m^0}
+$$
+代入\cref{eq:psi1_linear}中可得
+
+\begin{equation}
+	\psi_n^1 = \sum_{m\ne n} \frac{\left \langle \psi_m^0 | W | \psi_n^0  \right \rangle}{E_n^0 -E_m^0} \psi_m^0
+	\label{eq:psi1}
+\end{equation}
+
+\cref{eq:psi1}可以说明：当无微扰能级是非简并时，上式中的分母就不为零；但如果两个无微扰态具有相同的能量时，此时分母将为零，此时需要一种新的理论——简并微扰理论去解释，在此不做展开说明。
+
+回到二级能量修正公式的计算，将\cref{eq:psi1}带入\cref{eq:E2}中可以计算得
+$$
+\left \langle  \psi_n^0| \psi_n^1 \right \rangle 
+=
+\sum_{m\ne n} c_m^{(n)} \left \langle  \psi_n^0| \psi_m^0 \right \rangle  
+$$
+因为上式中的求和不包括$m=n$，所以其他项都是正交的，因此上式值为0。
+
+所以\cref{eq:E2}化为：
+$$
+E_n^2 =
+\left \langle  \psi_n^0 \bigg| W \bigg | \psi_n^1 \right \rangle 
+= \sum_{m\ne n} c_m^{(n)} \left \langle  \psi_n^0|W | \psi_m^0 \right \rangle 
+=
+\sum_{m\ne n} c_m^{(n)} \frac{\left \langle  \psi_m^0|W | \psi_n^0 \right \rangle \left \langle  \psi_n^0|W | \psi_m^0 \right \rangle }{E_n^0 -E_m^0}
+$$	
+最后有：
+
+\begin{equation}
+	E_n^2 = \sum_{m\ne n} c_m^{(n)} \frac{| \left \langle  \psi_m^0|W | \psi_n^0 \right \rangle |^2 }{E_n^0 -E_m^0}
+	\label{eq:E2_final}
+\end{equation}
+
+这就是二级微扰近似理论的一个基本结果。
+
+以上就是微扰法的形式理论，基于上面的讨论，我们得到了一级能量修正公式\cref{eq:E1}和二级能量修正公式\cref{eq:E2_final}。该方法原理便于理解，可以较为简便的算出微扰近似值，下面我们将利用微扰法，对氦原子的基态能级进行估算。
+
+
+\subsection{能量的零阶}
+基于上述微扰理论，我们求解了氦原子的基态能量，本节先讨论我们对零阶的计算。氦原子的Hamilton算子（当然这里忽略精细结构等很小的修正，大约是百分之一以下量级的）为
+\begin{equation}\label{eq1}
+	H=\{-\frac{\hbar^2}{2m}\nabla_1^2-\frac{1}{4\pi\epsilon_0}\frac{2e^2}{r_1}\}+\{-\frac{\hbar^2}{2m}\nabla_2^2-\frac{1}{4\pi\epsilon_0}\frac{2e^2}{r_2}\}+\frac{1}{4\pi\epsilon_0}\frac{e^2}{\left|\textbf{r}_1-\textbf{r}_2\right|}
+\end{equation}
+它的物理意义是非常显然的，前两项给出电子在原子核作用下的运动，第三项加入了两电子相互作用。我们将前两项作为“未微扰的Hamilton算子”，相互作用项作为“微扰”（虽然它不一定够“微”）。
+
+对于未微扰的Hamilton算子给出的Schrodinger方程的解表达为两个类氢原子波函数的简单乘积$\psi(\textbf{r}_1,\textbf{r}_2)=\psi_{nlm}(\textbf{r}_1)\psi_{n'l'm'}(\textbf{r}_2)$，按照上述微扰理论，基态能量的零阶和一阶项我们只需考虑基态，对于零阶，可由
+\begin{equation}\label{eq2}
+	\psi_0(\textbf{r}_1,\textbf{r}_2)=\psi_{100}(\textbf{r}_1)\psi_{100}(\textbf{r}_2)=\frac{8}{\pi a^3}e^{-2(r_1+r_2)/a}
+\end{equation}
+计算得到$E_0=8(-13.6eV)=-108.8eV$，另一角度看，一方面核电荷数变为了2，另一方面电子数变为了2，因此它确实应当是氢原子基态能量的八倍。
+
+
+\subsection{能量的一阶}
+接下来我们计算能量的一阶项，它涉及到处理微扰项，具体来说按照微扰理论，我们要计算微扰（也就是相互作用项$\frac{1}{4\pi\epsilon_0}\frac{e^2}{\left|\textbf{r}_1-\textbf{r}_2\right|}$）在由\cref{eq2}给出的态$\psi_0$下的均值（由于这是定态，这也就相当于给出本征值），即计算$\left\langle\frac{1}{\left|\textbf{r}_1-\textbf{r}_2\right|}\right\rangle$。这里的技巧是将$\textbf{r}_1$取为极轴，先计算关于$\textbf{r}_2$的积分。下面是具体计算
+$$
+\left \langle \frac{1}{\left | \textbf{r}_1-\textbf{r}_2 \right | } \right \rangle 
+=
+(\frac{8}{\pi a^3})^2 
+\int \left [ \int \frac{e^{-4(r_1+r_2)/a}}{\sqrt{r_1^2+r_2^2-2r_1r_2\cos{\theta_2}}} d^3\textbf{r}_2 \right ]
+d^3\textbf{r}_1 
+$$
+其中，$\left [ \int \frac{e^{-4(r_1+r_2)/a}}{\sqrt{r_1^2+r_2^2-2r_1r_2\cos{\theta_2}}} d^3\textbf{r}_2 \right ]$可化为$2\pi 
+\int_{0}^{+\infty}e^{-4(r_1+r_2)/a}
+\left [   \int_{0}^{\pi}\frac{\sin{\theta_2}}{\sqrt{r_1^2+r_2^2-2r_1r_2\cos{\theta_2}}}d\theta_2 \right ]
+r_2^2dr_2$，而
+\begin{equation*}
+	\begin{split}
+		\left [   \int_{0}^{\pi}\frac{\sin{\theta_2}}{\sqrt{r_1^2+r_2^2-2r_1r_2\cos{\theta_2}}}d\theta_2 \right ] &=\frac{1}{r_1r_2} \sqrt{r_1^2+r_2^2-2r_1r_2 \cos{\theta_2}} \bigg|_{a}^{b}\\
+		&=\frac{1}{r_1r_2}(\sqrt{r_1^2+r_2^2-2r_1r_2}-\sqrt{r_1^2+r_2^2-2r_1r_2}) \\
+		&=\frac{1}{r_1r_2}\left [ (r_1+r_2)-\left | r_1-r_2 \right | \right ] 
+	\end{split}
+\end{equation*}
+代入并进一步计算得到
+\begin{equation*}
+	\begin{split}
+		&4\pi e^{-4r_1/a}
+		\left [
+		\frac{1}{r_1} \int_{0}^{r_1} r_2^2 e^{-4r_2/a} dr_2
+		+
+		\int_{r_1}^{+\infty } r_2 e^{-4r_2/a}dr_2
+		\right ] \\
+		&=\frac{1}{r_1}
+		\left [
+		-\frac{a}{4}r_2^2 e^{-4r_2/a}
+		-2
+		\left ( 
+		{\frac{a}{4}}
+		\right ) ^2
+		r_2 e^{-4r_2/a}
+		- 
+		2\left ( \frac{a}{4} \right )^3
+		e^{-4r_2/a}
+		\right ] 
+		\bigg|_{0}^{r_1}+\left [ 
+		-\left ( \frac{a}{4} \right )  r_2 e^{-4r_2/a}
+		- 
+		\left (\frac{a}{4} \right )^2 e^{-4r_2/a}
+		\right ] \bigg|_{r_1}^{\infty}\\
+		&=\frac{\pi a^2}{8} 
+		\left [
+		\frac{a}{r_1} e^{-4r_1/a}
+		-\left ( 2+\frac{a}{r_1} \right ) e^{-8r_1/a}
+		\right ] 						
+	\end{split}
+\end{equation*}
+于是，最后可以计算得到
+\begin{equation*}
+	\begin{split}
+		\left \langle 
+		\frac{1}{\left | \textbf{r}_1-\textbf{r}_2 \right | }
+		\right \rangle 
+		&=
+		\frac{8}{\pi a^4}4\pi
+		\int_{0}^{+\infty } 
+		\left [ 
+		\frac{a}{r_1} e^{-4r_1/a} - (2+\frac{a}{r_1}) e^{-8r_1/a}
+		\right ] 
+		r_1^2 dr_1
+		\\
+		&=
+		\frac{32}{a^4}
+		\left ( 
+		a\int_{0}^{+\infty}r_1 e^{-4r_1/a} dr_1
+		- 
+		2\int_{0}^{+\infty} r_1^2 e^{-8r_1/a} dr_1
+		- 
+		a \int_{0}^{+\infty} r_1 e^{-8r_1/a} dr_1
+		\right ) 
+		\\
+		&=\frac{5}{4a} 
+	\end{split}
+\end{equation*}
+
+因此，能量的一阶修正$E^{(1)}_{ee}\approx 
+\frac{e^2}{4 \pi \epsilon_0 }
+\left \langle 
+\frac{1}{\left | \textbf{r}_1 -\textbf{r}_2 \right |}
+\right \rangle 
+=
+\frac{5}{2} \frac{m}{\hbar}  \left ( \frac{e^2}{4 \pi \epsilon_0} \right )^2
+=\frac{5}{2} \left ( -E_1 \right ) 
+= \frac{5}{2} \times  13.6 eV=34eV
+$
+
+那么最后在一阶修正下的氦原子基态能量为$E_0 +E^{(1)}_{ee} \approx (-108.8+34) eV=-74.8eV$，相较于实验值$-78.975eV$（来自参考文献\cref{ref:griffiths}，接下来的实验值都是这个），相对误差约$5.286\%$。
+
+
+%--------------------------------------------------------------------
+% 第三部分
+\section{基于变分法计算氦原子基态能量}
+变分法是一种强有力的近似方法，在量子力学中广泛应用于求解复杂体系的基态能量。相较于微扰法，变分法通过构造适当的试探波函数，以确保所得到的能量值总是高于或等于实际基态能量，从而为我们提供了一种有效的上界估计。对于氦原子这一多电子体系，变分法的应用可以有效处理电子-电子相互作用带来的复杂性，并提供高精度的基态能量计算。
+
+在这一章中，我们将详细介绍如何利用变分法计算氦原子的基态能量，首先介绍变分法的基本原理和数学形式，解释如何通过选择合适的试探波函数来逼近真实的基态能量。我们将讨论试探波函数的选择标准及其对计算结果的影响。在前一章微扰法的基础上，探讨如何选择和构造基于微扰法的试探波函数。我们将分析微扰法提供的波函数形式，并将其应用于变分法中，以期获得更为精确的基态能量估计。考虑到电子云对核电荷的屏蔽效应，我们将引入相应的试探波函数，进一步提高变分法的计算精度。通过对屏蔽效应的详细分析和数学处理，展示如何构造适用于氦原子的高效试探波函数。
+
+通过对氦原子基态能量的变分法计算，我们不仅可以验证微扰法的结果，还能够探索更为复杂的试探波函数形式，为高精度的原子能量计算提供有力的理论支持和方法借鉴。
+
+\subsection{变分法的核心原理}
+下面考虑另一种估算He原子基态能级的方法，也就是变分法。假设你想计算一个Hamilton量为$H$的体系的基态能量$E_{gs}$，但是却无法从定态薛定谔方程求出时，变分原理可以给出$E_{gs}$的一个上限。
+
+相对微扰法而言，变分法的基本原理是十分简单易懂的。当我的系统的Hamilton量记为$H$，选取任意的归一化的波函数$\psi$，都会有
+\[
+E_{gs}\leq\left \langle \psi |H|\psi \right \rangle \equiv \left \langle H \right \rangle
+\]
+
+其实这是十分容易理解的，系统基态的能量最低，如果系统不在基态而是在$\psi$态，那必然其能量会高于基态。
+
+但关键是这个$\psi$其实是可以任取的，相关证明具体可以参见文献\cref{ref:griffiths}。上述关于变分法的形势理论的语言叙述是缺乏说服力与表现力的，下面不妨用具体的计算来展现变分法的强大威力。
+
+\subsection{基于微扰法的试探波函数}
+首先回顾对于氦原子来说，系统的Hamilton算子由\cref{eq1}给出，我们的问题是求解基态能量$E_{gs}$。那么按照微扰法当中的经验，我们当然可以直接将试探波函数取为\cref{eq2}，那么显然这会给出与微扰法一阶修正相同的结果。
+
+具体来说，对于$V_{ee}=\frac{e^2}{4 \pi \epsilon_0} \frac{1}{ \left |  \textbf{r}_1- \textbf{r}_2\right | }$，有$H \psi _0=(8E_1 +V_{ee}) \psi _0$，所以$\langle H \rangle = 8E_1 +\langle V_{ee} \rangle$，其中微扰法给出了$
+\langle V_{ee} \rangle=(\frac{e^2}{4 \pi \epsilon_0}) (\frac{8}{\pi a^3})^2\int \frac{e^{-4(r_1+r_2)/a}}{\left | \textbf{r}_1 - \textbf{r}_2 \right | }d^3 \textbf{r}_1 d^3 \textbf{r}_2=E^{(1)}_{ee} =34eV$，后续计算在上一章中已经详细讨论了，这里就不赘述了。
+
+这样的结果对我们有启示：微扰法的高阶修正的上限可由变分法来估计，这正是文献\cref{ref:pekeris1959}和\cref{ref:knight1962}中相关的扰动变分法，此处我们便不做详细展开了。
+
+\subsection{基于电子云的屏蔽效应的试探波函数}
+接下来，我们需要找到一个比\cref{eq2}更真实的试探波函数。\cref{eq2}假设两个电子之间没有任何相互作用，而这在实际情况中是不准确的。我们设想：平均而言，每个电子形成一个负电的电子云，这部分地屏蔽了核的电荷。因此，另一个电子实际感受到的有效核电荷（$Z$）会小于2。于是，我们采用以下形式的波函数：
+
+\begin{equation}\label{eq3}
+	\psi_1 (\textbf{r}_1, \textbf{r}_2)
+	=\frac{Z^3}{\pi a^3} e^{\frac{Z(r_1+r_2)}{a}}
+\end{equation}
+
+进一步计算得到	
+\begin{equation*}
+	\begin{split}
+		\langle H \rangle &= 2ZE_1 + 2(Z - 2)(\frac{e^2}{4 \pi \epsilon_0}) \langle \frac{1}{r} \rangle +\langle V_{ee} \rangle\\
+		&=2ZE_1 + 2(Z - 2)(\frac{e^2}{4 \pi \epsilon_0}) \frac{Z}{a} +(- \frac{5Z}{4}E_1)\\
+		&=(-2Z^2 +\frac{27}{4}Z)E_1
+	\end{split}
+\end{equation*}
+显然，此时$\langle H \rangle$是$Z$的函数，我们将$Z$视为可变参数，而变分法指出任何的Z值都将大于$E_{gs}$，我们改变它可使$H$取最小值$\frac{d}{dZ} \langle H \rangle=( -4Z+\frac{27}{4})E_1=0$，得
+\begin{equation}\label{eq4}
+	Z=\frac{27}{16}=1.69
+\end{equation}
+由于$Z<2$，所以确实体现了了电子的屏蔽作用；于是我们合理地代入并进一步计算得到$E^{(calculate)}_{gs}=\langle H \rangle=-77.5eV$，相较于实验值相对误差约$1.868\%$。
+
+上述计算过程同样给了我们一个无比重要的启发：\textbf{若想确定某些复杂体系的基态能量，只需构造一个包含\textbf{大量可调参数}的试探波函数，计算其期望值$\langle H \rangle$，然后调整参数以获得最小可能值。即使试探波函数$\psi$与真实的基态波函数差异很大，通常仍能获得极其精确的基态能量$E_{gs}$。}
+
+%--------------------------------------------------------------------
+% 第四部分
+\section{基于Hylleraas方法计算氦原子基态能量}
+正如第一章中所谈到的，经过如前两章所述的对微扰法和变分法的了解、学习和探究，我们能够理解和尝试应用精确计算氦原子基态能量（文献\cref{ref:pekeris1959}和\cref{ref:knight1962}）的核心方法（或者说方法的起点），也就是本章要讨论的Hylleraas于1929年提出的方法（文献\cref{ref:hylleraas1929}）。我们对本章相关理论的学习主要基于文献\cref{ref:chen2004}，然后根据文章提出的方法进行了Mathematica编程，验证了文章相对误差小于$0.04\%$的结果；接下来，我们在此基础上提出了一种基于神经网络的Hylleraas方法实现的构想，并用Python语言具体实现了一个简单的模型，并取得了不错的精度。由于本章内容基于文献\cref{ref:chen2004}，因此我们采用与之一致的单位制$1 Hartree\approx27.211 eV$。
+
+\subsection{Hylleraas方法}
+正如我们在第三章中我们强调的“若想确定某些复杂体系的基态能量，只需构造一个包含\textbf{大量可调参数}的试探波函数，计算其期望值$\langle H \rangle$，然后调整参数以获得最小可能值。即使试探波函数$\psi$与真实的基态波函数差异很大，通常仍能获得极其精确的基态能量$E_{gs}$”，而Hylleraas于1929年提出了一种采用椭球坐标的Hylleraas坐标$s=r_1+r_2, \quad t=r_1-r_2, \quad u=r_{12} $来代替$(r_1,r_2,r_{12})$，由此把波函数写成$\mathbf{\psi }=\mathbf{\psi } (s,t,u)=\sum_{i}c_i \mathbf{\phi}_i(s,t,u)=\sum_{n,2l,m} c_{n,2l,m} e^{- \xi s}s^{n} t^{2l} u^{m}(n,l,m=0,1,2,…)$。其中，$\xi$和$c_i$是变分参数，由变分法确定，通过较少项的计算，我们发现求解得到的能量对$\xi$的具体值不敏感，因此我们可以将其取为由第三章基于电子云的屏蔽效应的试探波函数求解得到的\cref{eq4}，即$\xi=Z=1.69$。因此，波函数中实际上的参数是各个$c_i$。此外，下面式子中的$Z$则是表示正常的核电荷数，即$Z=2$。
+
+于是，在这样的椭球坐标下，体积元$\int d \mathbf{\tau}=2 \pi^2 \int_{0}^{ \infty} ds \int_{0}^{ s} du \int_{0}^{ u} u(s^2 -t^2) dt$，由此分别写出对于$\langle H \rangle$的$\langle T \rangle=I_T$和$\langle V \rangle=I_V$，并作归一化：
+
+动能项积分（用到Green公式$-\int \psi \nabla ^2_i \psi d \tau =\int ( \nabla_i \psi)^2 d \tau -\oint_{s} (\psi \nabla_i \psi)\cdot  d \mathbf{S}= \int ( \nabla_i \psi)^2 d \tau$）
+\begin{equation}\label{eq5}\small
+	\begin{split}
+		I_T&= \int \psi T \psi d \tau\\
+		&= 2 \pi^2 \int_{0}^{\infty} ds \int _{0}^{s} du \int_{0}^{u}dt  \left \{ u(s^2- t^2) [(\frac{\partial \psi}{\partial s} )^2 +(\frac{\partial \psi}{\partial t} )^2+(\frac{\partial \psi}{\partial u} )^2 ] +2s(u^2 -t^2) \frac{\partial \psi}{\partial s} \frac{\partial \psi}{\partial u} +2t(s^2 -u^2) \frac{\partial \psi}{\partial t} \frac{\partial \psi}{\partial u}  \right \} 
+	\end{split}
+\end{equation}
+
+势能项积分
+\begin{equation}\label{eq6}
+	I_V=\int \psi V \psi d \tau=2 \pi^2 \int_{0}^{ \infty} ds \int_{0}^{s} du \int_{0}^{u}[ -4Z su +(s^2 -t^2)] \psi^2 dt		
+\end{equation}
+
+归一化积分
+\begin{equation}\label{eq7}
+	I_N= \int  \psi^2 d \tau= 2 \pi^2 \int_{0}^{\infty} ds \int_{0}^{s} du \int_{0}^{u} u(s^2 -t^2) \psi^2 dt 		
+\end{equation}
+
+则由上三式\cref{eq5}、\cref{eq6}和\cref{eq7}计算得到$\langle H \rangle=\dfrac{I_T+I_V}{I_N}=E$，由于各项都是关于$c_i$的平方项，因此按变分原理得到的对各个参量$c_i$成立的是一个线性方程组
+\begin{equation}\label{eq8}
+	\frac{\partial {M}}{\partial {c} _i}+ \frac{\partial {L}}{\partial {c} _i}-E \frac{\partial {N}}{\partial {c} _i}= 0
+\end{equation}
+因此我们非常巧妙地考虑到，对于上述方程我们显然需要非平凡解，则这要求系数行列式的值为0，即有
+\begin{equation}\label{eq9}
+	\left |  \frac{\partial ^2M}{\partial {c_i } \partial c_j} +\frac{\partial ^2L}{\partial {c_i } \partial c_j} -E \frac{\partial^2N}{\partial {c_i } \partial c_j}  \right | =0
+\end{equation}
+这给出了一个关于我们要求的$E$的$n$次方程，可以想见，它的最小的实数解就是我们要求的氦原子基态能量。
+
+\subsection{根据相关参考文献中的思路编程实现氦原子基态能量的具体计算}
+基于上述Hylleraas方法，我们利用Mathematica实现具体编程并计算，根据文献\cref{ref:chen2004}，我们选取了以下十一项展开的Hylleraas波函数，它们在Mathematica中编程结果如\cref{fig:fig1}所示。
+$$
+\phi _1 =e^{- \xi s}, \quad \phi _2 =e^{- \xi s}s, \quad \phi _3 =e^{- \xi s}u,
+$$
+$$
+\phi _4 =e^{- \xi s} s^2, \quad \phi _5 =e^{- \xi s} t^2, \quad \phi _6 =e^{- \xi s} u^2,
+$$
+$$
+\phi _7 =e^{- \xi s}su, \quad \phi _8 =e^{- \xi s} s^2 u,
+$$
+$$
+\phi _9 =e^{- \xi s} t^2 u, \quad \phi _{10} =e^{- \xi s} u^3, \quad \phi _{11} =e^{- \xi s} t^2 u^2
+$$
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{APProjGra1.png}
+	\caption{11项Hylleraas波函数的Mathematica实现}
+	\label{fig:fig1}
+\end{figure}
+
+并且由于需要在Mathematica具体数值求解，我们需要具体表达出\cref{eq9}的各个元素，即$D_{ij} = H_{ij} -EN_{ij}$，而
+\tiny$$
+H_{ij} = 2 \pi^2 \int_{0}^{\infty} ds \int_{0}^{s} du \int_{0}^{u} dt[u(s^2 -t^2)[\frac{\partial \phi _i}{\partial s} \frac{\partial \phi _j}{\partial s} +\frac{\partial \phi _i}{\partial t} \frac{\partial \phi _j}{\partial t} +\frac{\partial \phi _i}{\partial u} \frac{\partial \phi _j}{\partial u}  ]
++s(u^2 -t^2)(\frac{\partial \phi _i}{\partial u} \frac{\partial \phi _j}{\partial s} +\frac{\partial \phi _i}{\partial s} \frac{\partial \phi _j}{\partial u} )+
+t(s^2 -u^2)(\frac{\partial \phi _i}{\partial u} \frac{\partial \phi _j}{\partial t} +\frac{\partial \phi _i}{\partial t} \frac{\partial \phi _j}{\partial u} ) 
++( -4 Zsu + s^2 -t^2) \phi _i \phi_j]
+$$
+
+\normalsize 另一项为
+$$ 
+N_{ij} =2 \pi^2 \int_{0}^{\infty} ds \int_{0}^{s} du \int_{0}^{u} u(s^2 -t^2)\phi _i \phi_jdt
+$$
+
+利用循环将它们编写于Mathematica中如\cref{fig:fig2}和\cref{fig:fig3}所示。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{APProjGra2.png}
+	\caption{矩阵元的Mathematica实现}
+	\label{fig:fig2}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{APProjGra3.png}
+	\caption{矩阵元的Mathematica实现}
+	\label{fig:fig3}
+\end{figure}
+
+最后得到矩阵的具体数值结果如\cref{fig:fig4}所示，利用数值求解函数求解得到如\cref{fig:fig5}所示结果。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{APProjGra4.png}
+	\caption{系数矩阵的数值表达}
+	\label{fig:fig4}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{APProjGra5.png}
+	\caption{数值求解结果}
+	\label{fig:fig5}
+\end{figure}
+
+即有$E=-2.9036138919635763 Hartree\approx -79.0102 eV$，与实验值对比，相对误差约$0.044\%$。
+
+\subsection{基于神经网络的Hylleraas方法实现}
+还是从这样一个最核心的思想出发“若想确定某些复杂体系的基态能量，只需构造一个包含\textbf{大量可调参数}的试探波函数，计算其期望值$\langle H \rangle$，然后调整参数以获得最小可能值。即使试探波函数$\psi$与真实的基态波函数差异很大，通常仍能获得极其精确的基态能量$E_{gs}$”，注意其中的关键词“大量可调参数”。另一角度看，Hylleraas波函数无非就是这样一个东西，输入三个值$(s,u,t)$，输出一个值，这个值的平方具有概率密度含义。因此，这样一个波函数当然可以用一个神经网络来近似（大量可调参数，输入输出）。而我们训练这个神经网络的依据便是依据变分原理，通过调整参数，给出的一个$\langle H \rangle$的最小值。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{APProjGra6.png}
+	\caption{基于神经网络的Hylleraas方法实现}
+	\label{fig:fig6}
+\end{figure}
+
+基于上述想法，我们用Python语言实现了一个简单的模型。
+
+首先，采用一个简单的有三层的全连接神经网络，激活函数采用了ReLU函数，如\cref{fig:fig7}所示。同时，为了保证波函数具有物理意义且可以归一化，我们加入了指数衰减的因子。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{APProjGra7.png}
+	\caption{ReLU激活函数}
+	\label{fig:fig7}
+\end{figure}
+
+接下来需要重点考虑得失损失函数的实现，我们基于\cref{eq5}、\cref{eq6}和\cref{eq7}编写了相关代码。在具体的实现上，由于\cref{eq5}涉及到求导，我采用了Pytorch的自动求导功能。而在高维数值积分的实现上，采用了Monte-Carlo算法。
+
+接下来我们将以下三个函数组合为能量损失函数，并选择了Adam优化器，然后将模型移动到了GPU上（然而我们的GPU只是一台笔记本具有的3060，并不能支持更大的模型，即使是当前这个，完成一次训练也会花掉大量时间）。
+
+完成上述准备后，我们编写了训练流程，考虑到指数衰减项在$x=50$时就已经达到$10^{-22}$的量级，因此，我为了变量$S$选取了$[0,50]$的范围以此来近似本来的$[0,\infty)$的范围。
+
+在电脑风扇长时间的悲鸣后，我们成功地观察到了损失函数随训练批次呈现出了如\cref{fig:fig8}所示变化。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{APProjGra8.png}
+	\caption{损失函数随训练批次变化关系示意图}
+	\label{fig:fig8}
+\end{figure}
+
+这表明损失函数有一个最小值，具体求解这个最小值为$E=-2.985 Hartree\approx -81.225 eV$，相较于实验值约$2.849\%$的相对误差。它的精度当然不如我们采用Mathematica计算得到的结果，但是训练神经网络是一个漫长的调参过程，在我们提供的附件中有相关代码展示我们调整学习率、引入$Z$因子等改进后的更好结果，此处就原理实现上来说，已经成功了，便不再赘述了。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{APProjGra9.png}
+	\caption{神经网络预测结果}
+	\label{fig:fig9}
+\end{figure}
+
+接下来我想谈论一下我们在实现这个方法过程中的一些思考。这种基于神经网络的方法允许我们将复杂的量子力学问题转化为优化问题，通过调整神经网络参数来求解。这种方法的优点在于，一方面可以通过改变网络结构或激活函数来适应不同的问题，另一方面适用于那些难以找到解析解的复杂系统。但是这一方法同样存在许多问题。首先，神经网络在训练过程中可能陷入局部最小值，这可能导致找到的解不是全局最优解，特别是在能量景观复杂的量子系统中。其次，Monte-Carlo方法虽然灵活但收敛速度慢，且积分的精度受到采样数量的影响。此外，高维积分的难度和计算成本也较高。当然，深度学习模型在训练过程中可能遇到梯度消失或爆炸的问题，尤其是在使用深层网络结构时。
+
+总的来说，虽然使用神经网络来计算量子系统的基态能量是一个有前景的方法，但它需要精心设计网络结构和损失函数，并且要小心处理神经网络训练中的各种数值问题。此外，还需要对积分方法和物理模型有深入的理解，以确保整个系统的物理意义和计算的准确性。对于未来的工作，可以考虑使用其他类型的网络（如卷积神经网络或图神经网络）来提高模型的表达能力和准确性。
+
+%--------------------------------------------------------------------
+% 第五部分
+\section{总结与致谢}
+\subsection{结论、心得与体会}
+在本次原子物理课程研究项目中，我们主要探索了利用微扰法、变分法和Hylleraas方法计算氦原子基态能量的不同方法。通过这些研究方法的应用，我们取得了如下主要结论：
+\begin{enumerate}
+	\item 微扰法：我们通过零阶和一阶近似成功计算了氦原子的基态能量，得到了与实验值接近的结果。具体来说，零阶能量为$-108.8 eV$，一阶能量修正为$34 eV$，最终得到的基态能量为$-74.8 eV$。这验证了微扰法在处理多电子体系时的有效性。
+	
+	\item 变分法：我们通过选择合适的试探波函数，进一步提高了计算精度。基于微扰法和电子云屏蔽效应的试探波函数分别得到了与微扰法一致的结果和进一步改进的基态能量估计值$-77.5 eV$。这表明变分法在考虑电子屏蔽效应时，可以显著提高计算精度。
+	
+	\item Hylleraas方法：通过引入椭球坐标和多个变分参数，我们在Mathematica中实现了Hylleraas方法的编程计算，得到的基态能量为$-79.0102 eV$，与实验值非常接近。此外，基于神经网络的Hylleraas方法初步验证了其潜力，尽管精度尚未完全达到预期，但取得了约为$-81.225 eV$的基态能量。
+\end{enumerate}
+
+通过此次研究项目，我们不仅加深了对氦原子基态能量计算的理解，还积累了宝贵的研究经验和心得体会：	
+\begin{enumerate}
+	\item 在研究过程中，我们深刻体会到理论知识的重要性。只有扎实的理论基础，才能在实际计算中游刃有余。通过理论学习与实际编程相结合，我们能够更好地理解和应用所学知识。
+	\item 本项目的顺利完成离不开团队成员之间的密切合作和相互支持。每个人都在项目中贡献了自己的力量，通过分工合作，我们能够更高效地完成任务。
+	\item 在研究过程中，我们遇到了许多挑战和困难，如复杂的数学推导和编程实现中的技术难题。然而，通过不断学习和尝试，我们逐一克服了这些困难。这使我们深刻认识到，科学研究需要勇气和耐心。
+	\item 在基于神经网络的Hylleraas方法实现中，我们尝试将现代深度学习技术引入传统量子力学计算，取得了一定的成果。这启示我们，在科学研究中，创新思维和跨学科的融合能够带来新的突破和进展。
+\end{enumerate}
+
+\subsection{致谢}
+这篇原子物理课程研究项目报告到这里就结束了，感谢老师和助教老师于百忙之中能抽出时间阅读并评改此文。由于这是我们是第一次写专业性如此强的文章，难免有些疏漏的地方和庸俗的见解，希望老师多多包涵。同时我们也在此感谢老师在“原子物理”这门课程中非常精彩的讲解，让我们有了很多的收获。祝老师们身体健康，工作顺利，生活幸福！

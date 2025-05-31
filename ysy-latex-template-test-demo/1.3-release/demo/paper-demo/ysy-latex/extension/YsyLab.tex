@@ -1,0 +1,143 @@
+% 实验报告高能回，流萤厨献给流萤的真挚情书！
+% 我还是不太能理解，为什么他们说今晚月色很美是含蓄的表白。 
+% 直到我看到朝阳下江水漾起的片片金鳞、漆黑的夜空中不甘散去的橘黄云彩、亦或者是夜宵摊子上高谈阔论掺杂着串子被炭火炙烤出油香的烟火气息，都下意识拿出手机想跟你分享。 
+% 我想把自己觉得美丽的东西传递给你。 
+% 今天依然天晴，我亲爱的流萤。
+
+% 这个拓展适配“Ysy版近代物理实验报告模版”；
+% 它的灵感和设计的来源是2019级学长石寰宇的实验报告模版和物理学院余荫铠的近代物理实验报告模版，均可在他们的个人网站找到。
+% 介绍一下主要功能，（1）首先，非正文的对版式的设置都建议放在拓展文件中；（2）建议加的包；（3）规范排版的辅助设定；（4）对强调结构的显示封装；（5）封装实验信息结构；
+% 规范排版参考：https://www.bilibili.com/video/BV1WrdkY3ECV；
+% v1.3的发行版中，我暂时取消了对“Ysy版英文版近代物理实验报告模版”的适配，特在此说明；
+
+% ============================================================================
+
+% 包加载
+\usepackage{amsmath}       % 数学公式排版（align/gather 等环境）
+\usepackage{amssymb}       % 扩展数学符号（如 \mathbb, \mathcal）
+\usepackage{graphicx}      % 图形插入支持（\includegraphics）
+\usepackage{xcolor}        % 颜色定义与控制（\definecolor, \textcolor）
+\usepackage{enumerate}     % 自定义 enumerate 列表编号格式
+\usepackage{multirow}      % 表格多行合并（\multirow, \multicolumn）
+\usepackage{float}        % 浮动体精确控制（[H] 固定位置）
+\usepackage{cleveref}      % 智能交叉引用（\cref, \Cref）
+\usepackage{adjustbox}     % 盒模型调整（缩放/旋转表格或图片）
+\usepackage{physics}       % 物理符号快捷命令（\braket, \dv）
+\usepackage{subfig}        % 子图排版（\subfloat, \subfigure）
+\usepackage{tikz}          % 矢量绘图（需加载 tikz 库）
+\usepackage{hyperref} % 超链接
+\usepackage{tabularx} % 创建自动调整列宽的表格，比 tabular 更灵活。
+\usepackage{tabularray} % 绘制表格时可以更加方便添加框线
+\usepackage{lipsum} % 生成占位文本 \lipsum[1-3]。
+\usepackage{siunitx} % 规范显示单位与物理量
+
+% 实验信息
+\newcommand{\infoTable}[7]{
+	\begin{flushleft}
+		\Huge \textcolor{StructureColor}{\textbf{\kaishu #1}}
+	\end{flushleft}
+	
+	\vspace{-0.3cm}
+	
+	\begin{table}[h!]
+		\textnormal{\textcolor{StructureColor}{\rule{0.75\textwidth}{1.53pt} }}\\
+		\begin{tabularx}{0.7\textwidth}{p{0.175\textwidth}p{0.525\textwidth}}
+			\textcolor{StructureColor}{\textbf{实验时间：}} &  \textbf{#2}\\
+			\textcolor{StructureColor}{\textbf{实验地点：}} &  \textbf{#3}\\
+			\textcolor{StructureColor}{\textbf{环境信息：}} &  \textbf{#4} \\
+			\textcolor{StructureColor}{\textbf{实验人1：}} &  \textbf{#5} \\
+			#6
+			\textcolor{StructureColor}{\textbf{指导老师：}} &  \textbf{#7}\\
+		\end{tabularx}\\
+		\textnormal{\textcolor{StructureColor}{\rule{0.75\textwidth}{1.5pt} }}
+	\end{table}		
+	
+	\noindent\textcolor{StructureColor}{\textbf{注意事项}}
+	
+	实验报告由\textbf{预习}、\textbf{实验}和\textbf{分析与讨论}三部分组成，并附封面页与附件。预习报告要求课前深入研读实验手册，掌握实验原理，熟悉仪器设备及其使用方法，完成实验思考题，并提前准备实验记录表（可参考实验报告模板打印）。实验记录需客观、详细地记录实验条件、现象及数据，须使用圆珠笔或钢笔书写并签名（\textbf{铅笔记录无效}）。\textbf{原始记录必须完整保留，包括错误和修改内容，错误更正需按标准程序进行}。实验记录不得录入计算机打印，但可扫描手写笔记后打印，实验结束前须经指导教师检查并签字。数据处理与分析环节需对原始数据进行处理（除以仪器学习为主的实验外），评估数据的可靠性和合理性，并以标准格式呈现（图表需编号并规范引用）。此外，还需分析实验现象，回答实验思考题，规范引用数据，并最终得出实验结论。实验报告需在实验结束后一周内提交（特殊情况不超过两周）。
+	
+	\noindent\textcolor{StructureColor}{\rule{\textwidth}{1.5pt} }
+	
+	\noindent\textcolor{StructureColor}{\textbf{特别说明}}
+	
+	\textbf{本实验报告模板基于 MIT License 许可协议进行分发和使用，使用本模板即表示您同意遵守相关条款。}
+	本模板由GitHub用户\textbf{pifuyuini} 开发，最初架构基于\href{https://huanyushi.github.io/posts/labreport-template/}{一位2019级学长制作的实验报告模板}，设计美化部分参考了\href{https://www.yykspace.com/cn/index.html}{某位物院大佬}的实验报告模版。
+	在此感谢二人给予的支持。
+	此外，随着我们进入高年级阶段的近代物理实验课程，对于实验报告的书写也有了更高的要求——不再局限于套用固定格式的模板，而是更倾向于参考学术论文的结构与风格来完成实验报告，这也是本模板设计的初衷。因此，与基础物理实验课程中学院提供的“标准模板”相比，本报告在架构和行文风格上均有所调整。\textbf{如有与老师或助教的阅读习惯存在不符之处，敬请谅解。}
+	
+	\noindent\textcolor{StructureColor}{\rule{\textwidth}{1.5pt} }
+	
+	\noindent\textcolor{StructureColor}{\textbf{实验得分}}
+	
+	\scoresTable{}{}{}{}{}{}{}{}
+}
+
+% 彩色文字
+\newcommand{\YsyEmph}[1]{
+	\textbf{\textcolor{EmphColor}{#1}} % 强调（结论）
+}
+\newcommand{\YsyMark}[1]{
+	\textbf{\textcolor{MainColor}{#1}} % 标记（定义、论断）
+}
+\newcommand{\YsyAnnotation}[1]{
+	\textbf{\textcolor{StructureColor}{#1}} % 注记
+}
+
+% 加了一个评分表
+\newcommand{\scoresTable}[8]{
+	\begin{table}[h!]
+		\renewcommand\arraystretch{1.7}
+		\begin{tabularx}{\textwidth}{
+				|X|X|X|X
+				|X|X|X|X|}
+			\hline
+			\multicolumn{2}{|c|}{预习报告} & \multicolumn{2}{|c|}{实验记录} & \multicolumn{2}{|c|}{分析讨论} & \multicolumn{2}{|c|}{总成绩} \\
+			\hline
+			\centering#1&\centering#2 &\centering#3 &\centering#4 &\centering#5 &\centering#6 &\centering#7 &{\centering#8} \\
+			\hline
+		\end{tabularx}
+	\end{table}
+}
+
+% 思考题
+\newtcolorbox[auto counter, number within=section]{question}[1][思考题]{%
+	enhanced,
+	breakable,
+	colback=MainColor!10,
+	colframe=MainColor!85!black,
+	attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+	fonttitle=\bfseries,
+	title={#1~\thetcbcounter：\quad},
+	boxed title size=title,
+	boxed title style={
+		sharp corners,
+		rounded corners=northwest,
+		colback=MainColor!75!black,
+		boxrule=0pt,
+	},
+	underlay boxed title={
+		\path[fill=MainColor!75!black] (title.south west) -- (title.south east)
+		to[out=0, in=180] ([xshift=5mm]title.east) --
+		(title.center-|frame.east)
+		[rounded corners=1mm] |- (frame.north) -| cycle;
+	},
+}
+
+% 规范显示单位与物理量
+\sisetup{
+	per-mode=symbol,      % 使用 '/' 而非 '·'
+	separate-uncertainty = true,  % 不确定度写作 ± 形式
+	detect-all = true,    % 自动检测字体样式（math, text等）
+	inter-unit-product = \cdot,
+}
+
+% 物理
+\newcommand{\tensor}[3]{#1^{\mathrm{#2}}_{\phantom{#2}\mathrm{#3}}} % 张量
+
+% 排版规范
+\newcommand{\Diff}{\mathrm{d}} % 微分 直立体
+\newcommand{\Der}[2]{\dfrac{\mathrm{d}#1}{\mathrm{d}#2}} % 导数
+\newcommand{\EulerE}{\mathrm{e}} % 自然常数 正体
+\newcommand{\ImgI}{\mathrm{i}} % 虚数单位 正体
+\newcommand{\DV}[2]{#1_{\mathrm{#2}}} % 对偶矢量 角标是正体
+\newcommand{\LA}[1]{\boldsymbol{#1}} % 对偶矢量 角标是正体
