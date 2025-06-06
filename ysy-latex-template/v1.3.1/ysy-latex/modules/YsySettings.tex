@@ -1,0 +1,316 @@
+% 页面
+\ifdefstring{\Ysy@type}{universal}{
+	\geometry{
+		a4paper,
+		top=25.4mm, bottom=25.4mm,
+		left=20mm, right=20mm,
+		headheight=2.17cm,
+		headsep=4mm,
+		footskip=12mm
+	}
+}{\relax}
+\ifdefstring{\Ysy@type}{paper}{
+	\geometry{
+		a4paper,
+		top=25.4mm, bottom=25.4mm,
+		left=20mm, right=20mm,
+		headheight=2.17cm,
+		headsep=4mm,
+		footskip=12mm
+	}
+}{\relax}
+\ifdefstring{\Ysy@type}{flab}{
+	\geometry{top=28mm,bottom=28mm,left=15mm,right=15mm}
+}{\relax}
+
+
+% 超链接
+\hypersetup{
+	breaklinks,
+	unicode,
+	linktoc=all,
+	bookmarksnumbered=true,
+	bookmarksopen=true,
+	pdfkeywords={YsyOneForAll},
+	colorlinks,
+	linkcolor=LinkColor,
+	citecolor=LinkColor,
+	urlcolor=LinkColor,
+	plainpages=false,
+	pdfstartview=FitH,
+	pdfborder={0 0 0},
+	linktocpage
+}
+
+% 引用
+\crefformat{figure}{#2{\textcolor{EmphColor}{\textbf{\YsyFigureName#1}}}#3} % 图片的引用格式
+\crefformat{equation}{#2{\textcolor{EmphColor}{(#1)}}#3} % 公式的引用格式
+\crefformat{table}{#2{\textcolor{EmphColor}{\textbf{\YsyTableName#1}}}#3} % 表格的引用格式
+\crefformat{enumi}{#2{\textcolor{EmphColor}{\textbf{[#1]}}}#3} % 文献的引用格式
+
+% 图片、表格名称
+\captionsetup[figure]{labelfont={color=StructureColor!70!black,bf},name=\YsyFigureName} % 图片形式
+\captionsetup[table]{labelfont={color=StructureColor!70!black,bf},name=\YsyTableName} % 表格形式
+
+% 页眉页脚
+\ifdefstring{\Ysy@type}{universal}{
+	\pagestyle{fancy}
+	\fancyhf{} 
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrule}{\color{StructureColor}\hrule width\textwidth height 2pt} 
+	\fancyhead[R]{\textcolor{StructureColor!70!LinkColor}{\textbf{\TitleName}}} 
+	\fancyfoot[L]{\textcolor{StructureColor!70!LinkColor}{\textbf{\AuthorName}}}
+	\fancyfoot[R]{\textcolor{StructureColor!70!LinkColor}{\textbf{\thepage}}}
+}{\relax}
+\ifdefstring{\Ysy@type}{flab}{
+	%	页眉页脚设置
+	\usepackage{fancyhdr}
+	\fancypagestyle{plain}{\pagestyle{fancy}}
+	\pagestyle{fancy}
+	\lhead{\kaishu 中山大学物理与天文学院基础物理实验} % 左边页眉，学院 + 课程
+	\rhead{\kaishu \TitleName} % 右边页眉，实验报告标题
+	\cfoot{\thepage} % 页脚，中间添加页码
+	\setlength{\headheight}{13.6pt}
+}{\relax}
+\ifdefstring{\Ysy@type}{paper}{
+	%	页眉页脚设置
+	\pagestyle{fancy}
+	% 清除原有样式
+	\fancyhf{}
+	% 页眉设置
+	\renewcommand{\headrulewidth}{0.4pt}  % 双线第一条
+	\renewcommand{\headrule}{
+		{\color{StructureColor}\hrule height 0.4pt}
+		{\vskip1pt}
+		{\color{StructureColor}\hrule height 0.4pt}
+		{\vskip2pt}
+	}
+	\fancyhead[C]{%
+		\textcolor{StructureColor!70!LinkColor}{\textbf{\normalsize\TitleName} \\[1pt]
+		{\small\AddInfo}}
+	}
+	% 页脚设置
+	\fancyfoot[C]{\textcolor{StructureColor!70!LinkColor}{-- \textbf{\thepage} --}}
+	\renewcommand{\footrulewidth}{0pt} % 无脚线
+}{\relax}
+
+% 列表
+% 有序列表
+\setlist[enumerate,1]{label=\textcolor{StructureColor!80!black}{\arabic*.}, font=\bfseries\color{StructureColor!80!black}} 
+\setlist[enumerate,2]{label=\textcolor{StructureColor!80!black}{(\arabic*)}, font=\bfseries\color{StructureColor!80!black}}
+\setlist[enumerate,3]{label=\textcolor{StructureColor!80!black}{\roman*.}, font=\bfseries\color{StructureColor!80!black}}
+\setlist[enumerate,4]{label=\textcolor{StructureColor!80!black}{(\roman*)}, font=\bfseries\color{StructureColor!80!black}}
+% 无序列表
+\ifYsy@fancyitem
+\setlist[itemize,1]{label=\liuyin}
+\else
+\setlist[itemize,1]{label={\eitemi}}
+\fi
+\setlist[itemize,2]{label={\eitemii}}
+\setlist[itemize,3]{label={\eitemiii}}
+
+% 章节
+\ifdefstring{\Ysy@type}{universal}{
+	\ifYsy@fancysection
+	\titleformat{\section}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+	{\liuyin[1.5ex]}
+	{0.618em}
+	{}
+	[
+	\vspace{-0.8cm} % 负值缩小间距
+	\noindent\textcolor{StructureColor}{\rule{0.382\textwidth}{2pt} }
+	\vspace{7pt}
+	]
+	\else
+	\titleformat{\section}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+	{\thesection}
+	{0.618em}
+	{}
+	\fi
+}{\relax}
+\ifdefstring{\Ysy@type}{flab}{
+	\titleformat{\section}[block]
+	{\centering\normalfont\bfseries\color{StructureColor!80!black}\huge}{}{1em}{}
+}{\relax}
+\titleformat{\subsection}[block]
+{\normalfont\bfseries\color{StructureColor!80!black}\LARGE} % 设置字体、大小、颜色
+{\thesubsection} % 设置subsection编号的格式
+{0.618em} % 编号和标题之间的间距
+{}
+\setcounter{secnumdepth}{3}
+\titleformat{\subsubsection}[block]
+{\normalfont\bfseries\color{StructureColor!80!black}\Large}
+{\thesubsubsection}
+{0.618em}
+{}
+\ifdefstring{\Ysy@type}{paper}{
+	\titleformat{\section}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+	{\thesection}
+	{0.618em}
+	{}
+}{\relax}
+
+% 目录
+\renewcommand\tableofcontents{%
+	\titleformat{\section}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+	{}
+	{0.618em}
+	{}
+	
+	\hypersetup{linktoc=all, linkcolor=black}
+	\thispagestyle{empty}
+	\section*{\centerline{\YsyContentsName}}
+	\@starttoc{toc}
+	\hypersetup{linkcolor=LinkColor}
+	\ifdefstring{\Ysy@type}{universal}{
+		\ifYsy@fancysection
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\liuyin[1.5ex]}
+		{0.618em}
+		{}
+		[
+		\vspace{-0.8cm} % 负值缩小间距
+		\noindent\textcolor{StructureColor}{\rule{0.382\textwidth}{2pt} }
+		\vspace{7pt}
+		]
+		\else
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\thesection}
+		{0.618em}
+		{}
+		\fi
+	}{\relax}
+	\ifdefstring{\Ysy@type}{flab}{
+		\titleformat{\section}[block]
+		{\centering\normalfont\bfseries\color{StructureColor!80!black}\huge}{}{1em}{}
+	}{\relax}
+	\ifdefstring{\Ysy@type}{paper}{
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\thesection}
+		{0.618em}
+		{}
+	}{\relax}
+}
+
+% 图片路径
+\graphicspath{{./images/}{./ysy-latex/theme}}
+
+% 参考文献
+\newcommand{\YsyRef}[7]{
+	\item\label{ref:#1} #2\quad#3[#4]. \emph{#5}, #6, #7.
+}
+
+\newcommand{\YsyReferencesPage}[1]{%
+	\titleformat{\section}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+	{}
+	{0.618em}
+	{}
+	
+	\section*{\centerline{\YsyReferencesName}}
+	\addcontentsline{toc}{section}{\YsyReferencesName}
+	\noindent
+	\begin{enumerate}[label=\textbf{[\arabic*]}, ref=\arabic*]
+		#1
+	\end{enumerate}
+	
+	\ifdefstring{\Ysy@type}{universal}{
+		\ifYsy@fancysection
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\liuyin[1.5ex]}
+		{0.618em}
+		{}
+		[
+		\vspace{-0.8cm} % 负值缩小间距
+		\noindent\textcolor{StructureColor}{\rule{0.382\textwidth}{2pt} }
+		\vspace{7pt}
+		]
+		\else
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\thesection}
+		{0.618em}
+		{}
+		\fi
+	}{\relax}
+	\ifdefstring{\Ysy@type}{flab}{
+		\titleformat{\section}[block]
+		{\centering\normalfont\bfseries\color{StructureColor!80!black}\huge}{}{1em}{}
+	}{\relax}
+	\ifdefstring{\Ysy@type}{paper}{
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\thesection}
+		{0.618em}
+		{}
+	}{\relax}
+}
+
+% 附录
+\newcommand{\YsyAppendixPage}[1]{%
+	\titleformat{\section}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+	{}
+	{0.618em}
+	{}
+	
+	\renewcommand\thesubsection{\Alph{subsection}}
+	\titleformat{\subsection}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\LARGE} % 设置字体、大小、颜色
+	{\thesubsection} % 设置subsection编号的格式
+	{0.618em} % 编号和标题之间的间距
+	{}
+	
+	\section*{\centerline{\YsyAppendixName}}
+	\addcontentsline{toc}{section}{\YsyAppendixName}
+	
+	\setcounter{subsection}{0}
+	#1
+	
+	\ifdefstring{\Ysy@type}{universal}{
+		\ifYsy@fancysection
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\liuyin[1.5ex]}
+		{0.618em}
+		{}
+		[
+		\vspace{-0.8cm} % 负值缩小间距
+		\noindent\textcolor{StructureColor}{\rule{0.382\textwidth}{2pt} }
+		\vspace{7pt}
+		]
+		\else
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\thesection}
+		{0.618em}
+		{}
+		\fi
+	}{\relax}
+	\ifdefstring{\Ysy@type}{flab}{
+		\titleformat{\section}[block]
+		{\centering\normalfont\bfseries\color{StructureColor!80!black}\huge}{}{1em}{}
+	}{\relax}
+	\ifdefstring{\Ysy@type}{paper}{
+		\titleformat{\section}[block]
+		{\normalfont\bfseries\color{StructureColor!80!black}\huge}
+		{\thesection}
+		{0.618em}
+		{}
+	}{\relax}
+	
+	\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+	\titleformat{\subsection}[block]
+	{\normalfont\bfseries\color{StructureColor!80!black}\LARGE} % 设置字体、大小、颜色
+	{\thesubsection} % 设置subsection编号的格式
+	{0.618em} % 编号和标题之间的间距
+	{}
+}
