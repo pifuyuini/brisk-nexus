@@ -162,7 +162,8 @@
 	{}
 	
 	\hypersetup{linktoc=all, linkcolor=black}
-	\thispagestyle{empty}
+	\restoregeometry
+	\thispagestyle{empty} % 这个bug十分难绷，在v1.4.1修复；我一辈子都想不到它为什么会出 bug……
 	\section*{\centerline{\YsyContentsName}}
 	\@starttoc{toc}
 	\hypersetup{linkcolor=LinkColor}

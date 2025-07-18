@@ -17,12 +17,12 @@
 	\definecolor{LinkColor}{HTML}{209fb5}       % sapphire：沉静理性的蓝青色
 }{\relax}
 
-% === SPA 主题配色 ===
+% === SPA 主题配色 -> 替换为冷自然的配色方案 ===
 \ifdefstring{\Ysy@ycolor}{SPA}{
-	\definecolor{StructureColor}{HTML}{2f4679}  % 深蓝灰
-	\definecolor{MainColor}{HTML}{5A6B84}       % 蓝灰高亮色
-	\definecolor{EmphColor}{HTML}{ba324f}       % 酒红强调色
-	\definecolor{LinkColor}{HTML}{544d87}       % 深空紫链接色
+	\definecolor{StructureColor}{HTML}{403990}  % 深蓝
+	\definecolor{MainColor}{HTML}{80A6E2}       % 浅蓝
+	\definecolor{EmphColor}{HTML}{F46F43}       % 橘红
+	\definecolor{LinkColor}{HTML}{FBDD85}       % 浅黄
 }{\relax}
 
 % === ElegantBlue 主题配色（来自ElegantBook） ===
@@ -39,14 +39,6 @@
 	\definecolor{MainColor}{HTML}{000000}       
 	\definecolor{EmphColor}{HTML}{000000} 
 	\definecolor{LinkColor}{HTML}{000000}
-}{\relax}
-
-% === 红色星空 ===
-\ifdefstring{\Ysy@ycolor}{StarFieldRed}{
-	\definecolor{StructureColor}{HTML}{53181F}  % 勃艮第红
-	\definecolor{MainColor}{HTML}{9d273e}    % 红漆   
-	\definecolor{EmphColor}{HTML}{d12809}  % 科拉松
-	\definecolor{LinkColor}{HTML}{388ef7} % 天澈蓝
 }{\relax}
 
 % === 蓝色星空 ===
@@ -89,10 +81,26 @@
 	\definecolor{LinkColor}{HTML}{ffff00} % 黄
 }{\relax}
 
-% === 敦煌 ===
-\ifdefstring{\Ysy@ycolor}{DunHuang}{
-	\definecolor{StructureColor}{HTML}{a64c3b}  % 浅红
-	\definecolor{MainColor}{HTML}{8fbfb0}    % 浅绿  
-	\definecolor{EmphColor}{HTML}{6b3b32}  % 深红
-	\definecolor{LinkColor}{HTML}{b78f68} % 土黄
+% === 碧屿浮光 ===
+\ifdefstring{\Ysy@ycolor}{EmeraldGleam}{
+	\definecolor{StructureColor}{HTML}{094c54}  % 深绿
+	\definecolor{MainColor}{HTML}{349d89}    % 墨绿  
+	\definecolor{EmphColor}{HTML}{38bfa7}  % 蓝绿
+	\definecolor{LinkColor}{HTML}{d8e6c4} % 黄绿
+}{\relax}
+
+% === 融入寂静中 ===
+\ifdefstring{\Ysy@ycolor}{FadeintoSilence}{
+	\definecolor{StructureColor}{HTML}{4c3d3e}  % 棕黑 Dusty Cocoa
+	\definecolor{MainColor}{HTML}{383b4e}    % 蓝黑  
+	\definecolor{EmphColor}{HTML}{798e9d}  % 蓝灰 Slate Blue
+	\definecolor{LinkColor}{HTML}{bab2a7} % 灰黄 Soft Greige
+}{\relax}
+
+% === 六月的雨的模样（紫色主题） ===
+\ifdefstring{\Ysy@ycolor}{JuneRainfall}{
+	\definecolor{StructureColor}{HTML}{5f5baf}  % Misty Violet
+	\definecolor{MainColor}{HTML}{9a64c5}    % 
+	\definecolor{EmphColor}{HTML}{568de4}  % Rainy Blue  
+	\definecolor{LinkColor}{HTML}{ba9fe1} % Rain Purple
 }{\relax}
